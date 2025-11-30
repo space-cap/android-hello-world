@@ -3,13 +3,14 @@
 ## 📚 목차
 
 1. [모니터링이란?](#모니터링이란)
-2. [Firebase Analytics 심화](#firebase-analytics-심화)
-3. [Firebase Crashlytics 심화](#firebase-crashlytics-심화)
-4. [Performance Monitoring](#performance-monitoring)
-5. [사용자 행동 분석](#사용자-행동-분석)
-6. [A/B 테스팅](#ab-테스팅)
-7. [대시보드 구축](#대시보드-구축)
-8. [실전 분석 사례](#실전-분석-사례)
+2. [Firebase 설정 (필수!)](#firebase-설정-필수)
+3. [Firebase Analytics 심화](#firebase-analytics-심화)
+4. [Firebase Crashlytics 심화](#firebase-crashlytics-심화)
+5. [Performance Monitoring](#performance-monitoring)
+6. [사용자 행동 분석](#사용자-행동-분석)
+7. [A/B 테스팅](#ab-테스팅)
+8. [대시보드 구축](#대시보드-구축)
+9. [실전 분석 사례](#실전-분석-사례)
 
 ---
 
