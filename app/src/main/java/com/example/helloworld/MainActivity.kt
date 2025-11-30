@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -113,6 +117,9 @@ class MainActivity : ComponentActivity() {
 // 페이지 1 컴포저블
 @Composable
 fun Page1(navController: NavController, modifier: Modifier = Modifier) {
+    // 카운터 State
+    var count by remember { mutableStateOf(0) }
+
     // 각 TextField의 입력값을 저장하는 state들
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
@@ -124,6 +131,38 @@ fun Page1(navController: NavController, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // ===== 카운터 섹션 =====
+        Text(text = "카운터 연습", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 카운트 표시
+        Text(
+                text = "카운트: $count",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 카운터 버튼들
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { count-- }) { Text("-") }
+
+            Button(onClick = { count = 0 }) { Text("초기화") }
+
+            Button(onClick = { count++ }) { Text("+") }
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // 구분선
+        HorizontalDivider(thickness = 1.dp)
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // ===== 회원 정보 입력 섹션 =====
         Text(text = "회원 정보 입력", fontSize = 24.sp)
 
         Spacer(modifier = Modifier.height(24.dp))
