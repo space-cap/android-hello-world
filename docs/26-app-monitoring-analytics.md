@@ -81,6 +81,243 @@ Crashlytics 알림: 크래시 발생!
 
 ---
 
+## Firebase 설정 (필수!)
+
+> [!CAUTION]
+> **Firebase를 사용하려면 먼저 설정이 필요합니다!**
+> 
+> 코드만 작성해서는 작동하지 않습니다. 다음 단계를 **반드시** 따라야 합니다.
+
+### 1단계: Firebase 프로젝트 생성
+
+**매우 상세한 단계:**
+
+1. **Firebase 콘솔 접속**
+   ```
+   브라우저에서 https://console.firebase.google.com 접속
+   Google 계정으로 로그인
+   ```
+
+2. **프로젝트 추가**
+   ```
+   "프로젝트 추가" 버튼 클릭
+   ↓
+   프로젝트 이름 입력 (예: "MyApp")
+   ↓
+   "계속" 클릭
+   ```
+
+3. **Google Analytics 활성화**
+   ```
+   "이 프로젝트에 Google Analytics 사용 설정" 체크 ✅
+   ↓
+   "계속" 클릭
+   ↓
+   Analytics 계정 선택 (또는 새로 만들기)
+   ↓
+   "프로젝트 만들기" 클릭
+   ↓
+   프로젝트 준비 완료! (약 30초 소요)
+   ```
+
+4. **Android 앱 추가**
+   ```
+   프로젝트 개요 페이지에서
+   ↓
+   Android 아이콘 (로봇 모양) 클릭
+   ↓
+   Android 패키지 이름 입력
+   ```
+
+**패키지 이름 찾는 방법:**
+```kotlin
+// build.gradle.kts (Module: app)에서 확인
+android {
+    namespace = "com.example.myapp"  // ← 이것을 복사!
+}
+```
+
+5. **google-services.json 다운로드**
+   ```
+   "google-services.json 다운로드" 버튼 클릭
+   ↓
+   파일 저장
+   ↓
+   ⚠️ 중요: 이 파일을 app/ 폴더에 복사!
+   ```
+
+**파일 위치 (매우 중요!):**
+```
+MyApp/
+├── app/
+│   ├── google-services.json  ← 여기에 복사! (프로젝트 루트 아님!)
+│   ├── build.gradle.kts
+│   └── src/
+├── build.gradle.kts
+└── settings.gradle.kts
+```
+
+**❌ 잘못된 위치:**
+```
+MyApp/
+├── google-services.json  ← 여기 아님!
+└── app/
+```
+
+### 2단계: Gradle 설정
+
+**왜 이 설정이 필요한가?**
+- Firebase SDK를 앱에 포함시키기 위함
+- `google-services.json` 파일을 읽어서 자동 설정
+
+#### Project 레벨 build.gradle.kts
+
+```kotlin
+// build.gradle.kts (Project 레벨)
+plugins {
+    id("com.android.application") version "8.2.0" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.20" apply false
+    
+    // ✅ 이 줄 추가!
+    id("com.google.gms.google-services") version "4.4.0" apply false
+}
+```
+
+#### Module 레벨 build.gradle.kts
+
+```kotlin
+// build.gradle.kts (Module: app)
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    
+    // ✅ 이 줄 추가!
+    id("com.google.gms.google-services")
+}
+
+dependencies {
+    // ✅ Firebase BOM 추가
+    // BOM = Bill of Materials (버전 관리 도구)
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    
+    // ✅ Analytics 추가 (버전 명시 불필요!)
+    implementation("com.google.firebase:firebase-analytics")
+    
+    // 다른 Firebase 서비스도 추가 가능
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-perf")
+}
+```
+
+**BOM이 뭔가요?**
+```
+BOM 없이:
+implementation("com.google.firebase:firebase-analytics:21.5.0")
+implementation("com.google.firebase:firebase-crashlytics:18.6.0")
+↑ 버전을 일일이 관리해야 함
+↑ 버전 충돌 가능성!
+
+BOM 사용:
+implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+implementation("com.google.firebase:firebase-analytics")
+implementation("com.google.firebase:firebase-crashlytics")
+↑ BOM이 자동으로 호환되는 버전 선택!
+↑ 버전 충돌 걱정 없음!
+```
+
+### 3단계: Gradle Sync
+
+```
+Android Studio에서:
+1. "Sync Now" 클릭
+   (또는 File → Sync Project with Gradle Files)
+2. 빌드 성공 확인
+3. 에러 발생 시:
+   - google-services.json 위치 확인
+   - 패키지 이름 일치 확인
+```
+
+### 4단계: 초기화 (자동!)
+
+**좋은 소식: 초기화는 자동입니다!**
+
+```kotlin
+// ✅ 이런 코드 필요 없음!
+// Firebase.initialize(context)  // 자동으로 됨!
+
+// ✅ 바로 사용 가능!
+val analytics = Firebase.analytics
+analytics.logEvent("app_opened", null)
+```
+
+**언제 초기화되나요?**
+```
+앱 시작
+    ↓
+Application.onCreate()
+    ↓
+Firebase 자동 초기화 (google-services.json 읽기)
+    ↓
+사용 준비 완료!
+```
+
+### 5단계: 테스트
+
+**Analytics가 작동하는지 확인:**
+
+```kotlin
+// MainActivity.kt
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // ✅ 테스트 이벤트 로깅
+        val analytics = Firebase.analytics
+        analytics.logEvent("test_event") {
+            param("test_param", "hello_firebase")
+        }
+        
+        Log.d("Firebase", "Analytics 이벤트 전송!")
+        
+        setContent {
+            MyApp()
+        }
+    }
+}
+```
+
+**Firebase 콘솔에서 확인:**
+```
+1. Firebase 콘솔 → Analytics → 이벤트
+2. 실시간 탭 선택
+3. 앱 실행
+4. 약 1-2분 후 이벤트 표시됨
+   (실시간 데이터는 약간의 지연 있음)
+```
+
+### 6단계: 디버그 모드 활성화 (선택사항)
+
+**개발 중에는 디버그 모드를 켜면 즉시 확인 가능:**
+
+```bash
+# Android Studio Terminal에서 실행
+
+# 디버그 모드 활성화
+adb shell setprop debug.firebase.analytics.app com.example.myapp
+
+# 또는 로그 확인
+adb shell setprop log.tag.FA VERBOSE
+adb shell setprop log.tag.FA-SVC VERBOSE
+adb logcat -v time -s FA FA-SVC
+```
+
+**Logcat에서 확인:**
+```
+I/FA: Event recorded: Event{name='test_event', params=Bundle[{test_param=hello_firebase}]}
+```
+
+---
+
 ## Firebase Analytics 심화
 
 > [!NOTE]
