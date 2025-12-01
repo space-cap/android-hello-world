@@ -1,17 +1,19 @@
 # Android & Jetpack Compose 학습 문서
 
-이 저장소는 Android 개발, Jetpack Compose, 아키텍처, 최신 Android 버전 기능 등을 포괄하는 상세한 학습 문서를 포함하고 있습니다.
+이 저장소는 Android 개발, Jetpack Compose, 아키텍처, 최신 Android 버전 기능 등을 포괄하는 **총 89개**의 상세한 학습 문서를 포함하고 있습니다.
 
 ## 📚 문서 목록
 
 ### 🚀 시작하기 & 기본
 - [00. 학습 로드맵](./00-learning-roadmap.md)
-- [01. Compose를 위한 Kotlin 기초](./01-kotlin-basics-for-compose.md)
+- [01-1. Kotlin의 역사와 탄생 배경](./01-1-kotlin-history.md)
+- [01-2. Compose를 위한 Kotlin 기초](./01-2-kotlin-basics-for-compose.md)
 - [02. Android 프로젝트 구조](./02-android-project-structure.md)
 
 ### 🎨 Jetpack Compose
 #### 기초 & UI
-- [03. 레이아웃 가이드](./03-jetpack-compose-layout-guide.md)
+- [03-1. Jetpack Compose의 역사](./03-1-jetpack-compose-history.md)
+- [03-2. 레이아웃 가이드](./03-2-jetpack-compose-layout-guide.md)
 - [04. 상태(State) 관리](./04-jetpack-compose-state-guide.md)
 - [05. 네비게이션](./05-jetpack-compose-navigation-guide.md)
 - [06. 테마 & 스타일링](./06-jetpack-compose-theming-guide.md)
@@ -27,16 +29,18 @@
 #### Canvas & Custom Drawing
 - [54. Canvas 기본](./54-jetpack-compose-canvas-basics.md)
 - [55. Canvas 고급](./55-jetpack-compose-canvas-advanced.md)
-- [56. Canvas 작업 요약](./56-Jetpack-Compose-Canvas-&-Custom-Drawing-작업요약.md)
+- [56. Canvas 작업 요약](./56-Jetpack-Compose-Canvas-작업요약.md)
 
 ### 🏗️ 아키텍처 & 데이터
 - [13. Room 데이터베이스](./13-android-room-database.md)
-- [18. 아키텍처 가이드](./18-android-architecture-guide.md)
+- [18-1. Android Architecture의 역사](./18-1-android-architecture-history.md)
+- [18-2. 아키텍처 가이드](./18-2-android-architecture-guide.md)
 - [25. 오프라인 퍼스트 아키텍처](./25-offline-first-architecture.md)
 - [37. DataStore 가이드](./37-jetpack-datastore-guide.md)
 - [38. Paging 3 가이드](./38-paging-3-guide.md)
 - [39. Hilt 의존성 주입](./39-dependency-injection-hilt-guide.md)
-- [40. Coroutines & Flow](./40-kotlin-coroutines-flow-guide.md)
+- [40-1. Kotlin Coroutines의 역사](./40-1-kotlin-coroutines-history.md)
+- [40-2. Coroutines & Flow](./40-2-kotlin-coroutines-flow-guide.md)
 - [41. MVVM & MVI 패턴](./41-mvvm-mvi-architecture-guide.md)
 
 ### 🌐 네트워킹 & 클라우드
@@ -59,6 +63,29 @@
 - [57. WebView 기본](./57-android-webview-basics.md)
 - [58. WebView & JS Bridge](./58-android-webview-javascript-bridge.md)
 - [59. WebView 작업 요약](./59-WebView-작업요약.md)
+
+### 📡 연결성 & 하드웨어
+- [60. Bluetooth 가이드](./60-android-bluetooth-guide.md)
+- [61. NFC 가이드](./61-android-nfc-guide.md)
+- [63. 센서 & 모션](./63-android-sensors-motion-guide.md)
+
+### ♿ 접근성 & 시스템
+- [65. 접근성 가이드](./65-android-accessibility-guide.md)
+- [66. 생체 인식](./66-android-biometric-guide.md)
+- [67. 미디어 & 오디오](./67-android-media-audio-guide.md)
+- [68. 인앱 업데이트](./68-android-in-app-updates-guide.md)
+- [69. 단축키 & 다이내믹 피처](./69-android-shortcuts-dynamic-features-guide.md)
+
+### 🤖 머신러닝 & AR
+- [71. ML Kit](./71-android-ml-kit-guide.md)
+- [72-1. AR의 역사](./72-1-arcore-history.md)
+- [72-2. ARCore 가이드](./72-2-android-arcore-guide.md)
+
+### 📱 폼 팩터 & 크로스 플랫폼
+- [73-1. 폴더블의 역사](./73-1-foldable-history.md)
+- [73-2. Window Manager](./73-2-android-window-manager-guide.md)
+- [74-1. KMM의 역사](./74-1-kmm-history.md)
+- [74-2. Kotlin Multiplatform Mobile](./74-2-kotlin-multiplatform-mobile-guide.md)
 
 ### 🆕 Android 버전별 새 기능
 - [49. Android 13 기능](./49-android-13-new-features.md)
@@ -84,8 +111,13 @@
 - [24. CI/CD 자동화](./24-ci-cd-automation-guide.md)
 - [26. 모니터링 & 분석](./26-app-monitoring-analytics.md)
 
+### 🔄 백그라운드 & 데이터
+- [76. WorkManager](./76-android-work-manager-guide.md)
+- [77. Paging 3](./77-android-paging3-guide.md)
+- [78. DataStore](./78-android-datastore-guide.md)
+
 ### 📦 예제 프로젝트
 - [20. 완성된 앱 예제](./20-complete-app-example.md)
 
 ---
-*Last Updated: 2024-12-01*
+*Last Updated: 2024-12-02*
