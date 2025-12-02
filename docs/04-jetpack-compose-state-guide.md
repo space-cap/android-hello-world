@@ -743,7 +743,286 @@ fun CounterScreen() {
 - ✅ 테스트 용이
 - ✅ 생명주기 관리
 
-### 3.2 ViewModel 설정
+### 3.2 ViewModel의 동작 원리 🔍
+
+#### 자주 하는 질문
+
+> "ViewModel은 어떻게 화면 회전 시에도 값이 유지되지?"  
+> "ViewModel은 static 클래스야?"
+
+**정답**: 아닙니다! ViewModel은 **ViewModelStore**라는 특별한 저장소에 보관됩니다.
+
+#### ❌ Static이 아닌 이유
+
+```kotlin
+class CounterViewModel : ViewModel() {
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow<Int> = _count.asStateFlow()
+    
+    // ❌ 이것은 static이 아닙니다!
+}
+```
+
+**Static이라면**:
+- 앱 전체에서 하나만 존재
+- 모든 화면이 같은 인스턴스 공유
+- 메모리 누수 위험
+
+**ViewModel은**:
+- **각 Activity/Fragment마다 독립적인 인스턴스**
+- ViewModelStore에 저장됨
+- 화면 회전 시에도 유지됨 ✅
+
+#### 🏗️ ViewModel의 저장 구조
+
+```
+Activity/Fragment
+    ↓
+ViewModelStoreOwner (인터페이스 구현)
+    ↓
+ViewModelStore (저장소)
+    ↓
+HashMap<String, ViewModel>
+    ↓
+"CounterViewModel" → CounterViewModel 인스턴스
+```
+
+#### 🎬 단계별 동작 과정
+
+**1️⃣ 첫 ViewModel 생성**
+
+```kotlin
+@Composable
+fun CounterScreen(
+    viewModel: CounterViewModel = viewModel()
+) {
+    // ...
+}
+```
+
+내부 동작:
+```
+1. viewModel() 함수 호출
+2. Activity의 ViewModelStore 확인
+3. "CounterViewModel" 키로 검색
+4. 없으면 새로 생성하고 저장:
+   ViewModelStore["CounterViewModel"] = CounterViewModel()
+5. 있으면 기존 인스턴스 반환
+```
+
+**2️⃣ 화면 회전 시 (핵심!)**
+
+```
+화면 회전 발생
+    ↓
+Activity 파괴 (onDestroy)
+    ↓
+ViewModelStore는 유지됨! ← 핵심!
+    ↓
+새 Activity 생성 (onCreate)
+    ↓
+viewModel() 호출
+    ↓
+ViewModelStore에서 기존 인스턴스 반환
+    ↓
+데이터 유지됨! ✅
+```
+
+**3️⃣ 앱 종료 시**
+
+```
+뒤로 가기 또는 finish() 호출
+    ↓
+Activity 완전히 종료
+    ↓
+ViewModelStore.clear() 호출
+    ↓
+ViewModel.onCleared() 호출
+    ↓
+ViewModel 인스턴스 제거
+```
+
+#### 💡 ViewModelStore의 실제 구현 (간단히)
+
+```kotlin
+// Android 내부 코드 (간략화)
+class ViewModelStore {
+    private val map = HashMap<String, ViewModel>()
+    
+    fun put(key: String, viewModel: ViewModel) {
+        map[key] = viewModel
+    }
+    
+    fun get(key: String): ViewModel? {
+        return map[key]
+    }
+    
+    fun clear() {
+        for (vm in map.values) {
+            vm.onCleared()  // 정리 작업
+        }
+        map.clear()
+    }
+}
+
+// Activity는 ViewModelStore를 가지고 있음
+class ComponentActivity : Activity(), ViewModelStoreOwner {
+    private val viewModelStore = ViewModelStore()
+    
+    override fun getViewModelStore(): ViewModelStore {
+        return viewModelStore
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        
+        // 화면 회전이 아닌 진짜 종료인 경우에만
+        if (isFinishing) {
+            viewModelStore.clear()
+        }
+        // 화면 회전이면 ViewModelStore 유지!
+    }
+}
+```
+
+#### 🔬 실제 확인해보기
+
+```kotlin
+class CounterViewModel : ViewModel() {
+    init {
+        println("🟢 ViewModel 생성: ${this.hashCode()}")
+    }
+    
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow<Int> = _count.asStateFlow()
+    
+    fun increment() {
+        _count.value++
+        println("🔵 count = ${_count.value}")
+    }
+    
+    override fun onCleared() {
+        println("🔴 ViewModel 제거: ${this.hashCode()}")
+        super.onCleared()
+    }
+}
+
+@Composable
+fun CounterScreen(
+    viewModel: CounterViewModel = viewModel()
+) {
+    println("🟡 CounterScreen Recomposition")
+    
+    val count by viewModel.count.collectAsState()
+    
+    Button(onClick = { viewModel.increment() }) {
+        Text("카운트: $count")
+    }
+}
+```
+
+**실행 결과**:
+
+```
+// 앱 시작
+🟢 ViewModel 생성: 123456789
+🟡 CounterScreen Recomposition
+
+// 버튼 클릭
+🔵 count = 1
+🟡 CounterScreen Recomposition
+
+// 화면 회전
+🟡 CounterScreen Recomposition
+// ViewModel 생성 안 됨! 기존 인스턴스 재사용
+
+// 뒤로 가기
+🔴 ViewModel 제거: 123456789
+```
+
+**주목**: 화면 회전 시 ViewModel이 **재생성되지 않습니다!**
+
+#### 📊 remember vs ViewModel vs Static
+
+| 특성 | remember | ViewModel | Static |
+|------|----------|-----------|--------|
+| **저장 위치** | Composition Tree | ViewModelStore | 클래스 영역 |
+| **화면 회전 시** | ❌ 사라짐 | ✅ 유지됨 | ✅ 유지됨 |
+| **앱 종료 시** | 사라짐 | 사라짐 | ✅ 유지됨 |
+| **인스턴스 독립성** | ✅ 각 Composable마다 | ✅ 각 Activity마다 | ❌ 전역 공유 |
+| **메모리 관리** | 자동 | 자동 | ⚠️ 수동 필요 |
+| **사용 사례** | UI State | 비즈니스 로직 | ⚠️ 권장 안 함 |
+
+#### 🏗️ 여러 화면에서 ViewModel 사용
+
+```kotlin
+// MainActivity
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        setContent {
+            val viewModel: CounterViewModel = viewModel()
+            // MainActivity의 ViewModelStore에 저장
+            
+            CounterScreen(viewModel)
+        }
+    }
+}
+
+// SecondActivity
+class SecondActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        setContent {
+            val viewModel: CounterViewModel = viewModel()
+            // SecondActivity의 ViewModelStore에 저장
+            // MainActivity와는 다른 인스턴스!
+            
+            CounterScreen(viewModel)
+        }
+    }
+}
+```
+
+**결과**:
+- MainActivity의 ViewModel: 인스턴스 A
+- SecondActivity의 ViewModel: 인스턴스 B
+- **각각 독립적!** (Static이 아님)
+
+#### ✅ 핵심 정리
+
+```kotlin
+// ❌ Static 변수 (권장 안 함)
+companion object {
+    var count = 0  // 모든 곳에서 공유, 메모리 누수 위험
+}
+
+// ❌ remember (화면 회전 시 사라짐)
+var count by remember { mutableStateOf(0) }
+
+// ✅ ViewModel (화면 회전 시에도 유지, Activity마다 독립적)
+class CounterViewModel : ViewModel() {
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow<Int> = _count.asStateFlow()
+}
+```
+
+**ViewModel이 값을 유지하는 이유**:
+1. ViewModelStore에 저장됨 (HashMap)
+2. 화면 회전 시 Activity는 재생성되지만 ViewModelStore는 유지됨
+3. 새 Activity가 같은 ViewModelStore를 사용
+4. 따라서 기존 ViewModel 인스턴스를 재사용
+5. 앱 종료 시에만 ViewModelStore.clear() 호출
+
+> [!TIP]
+> **비유로 이해하기**
+> - **remember**: 메모장 (Recomposition 시 유지, 화면 회전 시 사라짐)
+> - **ViewModel**: 서랍 (화면 회전 시에도 유지, Activity 종료 시 비움)
+> - **Static**: 금고 (앱 종료까지 유지, 모든 곳에서 공유)
+
+### 3.3 ViewModel 설정
 
 #### 1. 의존성 추가 (build.gradle.kts)
 ```kotlin
@@ -920,6 +1199,8 @@ fun TodoScreen(
 ### 3.5 Level 3 체크리스트
 
 - [ ] ViewModel의 필요성을 이해했다
+- [ ] **ViewModelStore와 ViewModel의 동작 원리를 이해했다** ⭐
+- [ ] **ViewModel이 static이 아닌 이유를 안다** ⭐
 - [ ] StateFlow를 사용할 수 있다
 - [ ] `collectAsState()`로 State를 수집할 수 있다
 - [ ] ViewModel에서 비즈니스 로직을 관리할 수 있다
@@ -1134,7 +1415,7 @@ val expensiveValue by remember {
 
 ---
 
-**마지막 업데이트**: 2025-11-30  
+**마지막 업데이트**: 2024-12-02  
 **작성자**: Antigravity AI Assistant
 
 Happy Learning! 🚀
