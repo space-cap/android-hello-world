@@ -4,6 +4,7 @@
 > - **04**: [State 완벽 가이드](./04-jetpack-compose-state-guide.md) - 기초부터 ViewModel까지
 > - **04-1**: [State 고급 패턴](./04-1-jetpack-compose-state-advanced.md) - Side Effect, 성능 최적화
 > - **04-2**: State 실전 프로젝트 (현재 문서) - 메모, 타이머, 채팅 앱
+> - **04-3**: [State 치트시트](./04-3-jetpack-compose-state-cheatsheet.md) - 핵심 요약, 템플릿
 
 ---
 

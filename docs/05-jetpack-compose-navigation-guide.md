@@ -1,5 +1,9 @@
 # Jetpack Compose Navigation과 데이터 전달 가이드
 
+> 📖 **Navigation 가이드 시리즈**
+> - **05**: Navigation 기초 (현재 문서) - 기본 개념, 데이터 전달
+> - **05-1**: [Navigation 심화](./05-1-jetpack-compose-navigation-advanced.md) - Type Safe, 중첩 그래프, BottomNav, DeepLink
+
 ## 📚 목차
 1. [개요](#개요)
 2. [기본 개념](#기본-개념)
@@ -592,11 +596,11 @@ class MainActivity : ComponentActivity() {
 - [TextField in Compose](https://developer.android.com/jetpack/compose/text)
 
 ### 다음 단계
-1. **뒤로가기 처리**: `navController.popBackStack()`
-2. **중첩 Navigation**: Nested Navigation Graphs
-3. **ViewModel 통합**: Navigation + ViewModel
-4. **Deep Links**: 외부에서 특정 화면으로 진입
-5. **Type-safe Navigation**: Kotlin DSL 활용
+1. **[Navigation 심화 가이드](./05-1-jetpack-compose-navigation-advanced.md)**: Type Safe Navigation, 중첩 그래프, Bottom Navigation 등 고급 주제를 학습하세요.
+2. **뒤로가기 처리**: `navController.popBackStack()`
+3. **중첩 Navigation**: Nested Navigation Graphs (심화 가이드 참조)
+4. **ViewModel 통합**: Navigation + ViewModel (심화 가이드 참조)
+5. **Deep Links**: 외부에서 특정 화면으로 진입 (심화 가이드 참조)
 
 ---
 
