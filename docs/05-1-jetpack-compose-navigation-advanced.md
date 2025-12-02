@@ -181,18 +181,33 @@ Bottom Navigation은 단순해 보이지만, **상태 유지(State Preservation)
 
 ### 1. Route 정의
 
+Bottom Navigation 아이템을 정의할 때, 각 아이템이 이동할 **목적지(Route)**를 가지고 있어야 합니다.
+
 ```kotlin
+import androidx.compose.ui.graphics.vector.ImageVector
+
+/**
+ * 하단 탭 아이템 정의
+ * 
+ * @param route 이동할 목적지 (Serializable 객체). 
+ *              Type Safe Navigation에서는 객체 자체를 경로로 사용하므로 Any 타입으로 선언합니다.
+ */
 @Serializable
 sealed class BottomNavItem(
     val title: String,
     val icon: ImageVector,
-    val route: Any // Serializable 객체
+    val route: Any // ⚠️ 중요: String이 아니라 Any입니다! (AppRoute 객체를 담기 위해)
 ) {
+    // 각 탭별로 이동할 목적지(AppRoute)를 매핑합니다.
     object Home : BottomNavItem("홈", Icons.Default.Home, AppRoute.Home)
     object Search : BottomNavItem("검색", Icons.Default.Search, AppRoute.Search)
     object Profile : BottomNavItem("프로필", Icons.Default.Person, AppRoute.Profile("me"))
 }
 ```
+
+> [!NOTE]
+> **왜 `route`가 `Any`인가요?**
+> 기존 문자열 방식에서는 `val route: String`이었지만, Type Safe Navigation에서는 `AppRoute.Home` 같은 **객체** 자체가 경로가 됩니다. 서로 다른 타입의 객체(`AppRoute.Home`, `AppRoute.Search` 등)를 하나의 프로퍼티에 담기 위해 `Any` 타입을 사용합니다.
 
 ### 2. Scaffold와 연동
 
@@ -205,14 +220,71 @@ fun MainScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     
+### 2. Scaffold와 연동
+
+`Scaffold`는 Material Design의 기본 레이아웃 구조를 구현해주는 Composable입니다. TopBar, BottomBar, FloatingActionButton 등을 슬롯 API로 쉽게 배치할 수 있게 해줍니다.
+
+**Navigation과 함께 사용할 때의 핵심 구조:**
+1. **바깥쪽(Scaffold)**: 변하지 않는 UI (하단 탭, 상단 바)
+2. **안쪽(NavHost)**: 화면이 바뀌는 콘텐츠 영역
+
+```kotlin
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    
+    // 현재 보고 있는 화면의 Route를 감지 (하단 탭 선택 상태 동기화용)
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    
     // 하단 탭 리스트
+    val items = listOf(BottomNavItem.Home, BottomNavItem.Search, BottomNavItem.Profile)
+
+    Scaffold(
+        // 하단 바 영역
+        bottomBar = {
+            NavigationBar {
+                items.forEach { item ->
+                    // ... (탭 아이템 구현) ...
+                }
+            }
+        }
+    ) { padding -> // ⚠️ 중요: Scaffold가 계산해준 패딩값
+        // NavHost를 Scaffold의 content 영역에 배치
+        NavHost(
+            navController = navController,
+            startDestination = AppRoute.Home,
+            // 하단 바에 가려지지 않도록 패딩 적용 필수!
+            modifier = Modifier.padding(padding)
+        ) {
+            // ... 화면 정의 ...
+        }
+    }
+}
+```
+
+> [!TIP]
+> **`padding` 파라미터를 무시하지 마세요!**
+> `Scaffold`는 하단 바나 상단 바의 높이만큼 콘텐츠를 밀어내기 위해 `PaddingValues`를 제공합니다. 이를 `NavHost`의 `modifier.padding()`에 전달하지 않으면, 콘텐츠의 맨 아래 부분이 하단 바에 가려져서 안 보이게 됩니다.
+
+#### 상세 구현 코드
+
+```kotlin
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    
     val items = listOf(BottomNavItem.Home, BottomNavItem.Search, BottomNavItem.Profile)
 
     Scaffold(
         bottomBar = {
             NavigationBar {
                 items.forEach { item ->
-                    // 현재 탭이 선택되었는지 확인 (계층 구조 지원)
+                    // 현재 탭 선택 여부 확인 (계층 구조 지원)
+                    // 예: Home/Detail 화면에 있어도 Home 탭이 선택된 것으로 표시
                     val isSelected = currentDestination?.hierarchy?.any { 
                         it.hasRoute(item.route::class) 
                     } == true
@@ -243,7 +315,9 @@ fun MainScreen() {
             startDestination = AppRoute.Home,
             modifier = Modifier.padding(padding)
         ) {
-            // ... 화면 정의 ...
+            composable<AppRoute.Home> { HomeScreen() }
+            composable<AppRoute.Search> { SearchScreen() }
+            composable<AppRoute.Profile> { ProfileScreen() }
         }
     }
 }
