@@ -1,5 +1,12 @@
 # Jetpack Compose State 완벽 가이드
 
+> 📖 **State 가이드 시리즈**
+> - **04**: State 완벽 가이드 (현재 문서) - 기초부터 ViewModel까지
+> - **04-1**: [State 고급 패턴](./04-1-jetpack-compose-state-advanced.md) - Side Effect, 성능 최적화
+> - **04-2**: [State 실전 프로젝트](./04-2-jetpack-compose-state-projects.md) - 메모, 타이머, 채팅 앱
+
+---
+
 ## 📚 목차
 1. [State란 무엇인가?](#state란-무엇인가)
 2. [학습 로드맵](#학습-로드맵)
@@ -1208,7 +1215,7 @@ fun TodoScreen(
 
 ---
 
-## Level 4: 고급 State 패턴
+## Level 4: 고급 State 패턴 (미리보기)
 
 ### 학습 목표
 - [ ] `derivedStateOf` 사용
@@ -1216,7 +1223,14 @@ fun TodoScreen(
 - [ ] `LaunchedEffect`와 Side Effect
 - [ ] State 최적화 기법
 
-### 4.1 derivedStateOf
+> [!NOTE]
+> **Level 4의 상세한 내용은 별도 문서로 이동했습니다!**
+> 
+> 더 깊이 있는 학습을 원하신다면:
+> - **[04-1. State 고급 패턴](./04-1-jetpack-compose-state-advanced.md)** - Side Effect, 성능 최적화, 테스팅
+> - **[04-2. State 실전 프로젝트](./04-2-jetpack-compose-state-projects.md)** - 메모 앱, 타이머 앱, 채팅 앱
+
+### 4.1 derivedStateOf (간략)
 
 **용도**: 다른 State로부터 계산된 State를 만들 때 사용
 
@@ -1224,9 +1238,9 @@ fun TodoScreen(
 @Composable
 fun SearchScreen() {
     var searchText by remember { mutableStateOf("") }
-    val items = remember { listOf("Apple", "Banana", "Cherry", "Date") }
+    val items = remember { listOf("Apple", "Banana", "Cherry") }
     
-    // ✅ derivedStateOf: searchText가 변경될 때만 재계산
+    // searchText가 변경될 때만 재계산
     val filteredItems by remember {
         derivedStateOf {
             items.filter { it.contains(searchText, ignoreCase = true) }
@@ -1236,8 +1250,7 @@ fun SearchScreen() {
     Column {
         OutlinedTextField(
             value = searchText,
-            onValueChange = { searchText = it },
-            label = { Text("검색") }
+            onValueChange = { searchText = it }
         )
         
         LazyColumn {
@@ -1249,30 +1262,26 @@ fun SearchScreen() {
 }
 ```
 
-### 4.2 rememberSaveable
+### 4.2 rememberSaveable (간략)
 
-**용도**: 프로세스 종료 후에도 State 유지 (화면 회전, 백그라운드 등)
+**용도**: 프로세스 종료 후에도 State 유지
 
 ```kotlin
 @Composable
 fun FormScreen() {
-    // ❌ remember: 프로세스 종료 시 사라짐
+    // remember: 프로세스 종료 시 사라짐
     var name by remember { mutableStateOf("") }
     
-    // ✅ rememberSaveable: 프로세스 종료 후에도 유지
+    // rememberSaveable: 프로세스 종료 후에도 유지
     var email by rememberSaveable { mutableStateOf("") }
     
     Column {
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("이메일 (유지됨)") }
-        )
+        OutlinedTextField(value = email, onValueChange = { email = it })
     }
 }
 ```
 
-### 4.3 LaunchedEffect와 Side Effect
+### 4.3 LaunchedEffect (간략)
 
 **용도**: Composable의 생명주기에 맞춰 비동기 작업 실행
 
@@ -1281,7 +1290,6 @@ fun FormScreen() {
 fun TimerScreen() {
     var seconds by remember { mutableStateOf(0) }
     
-    // LaunchedEffect: Composable이 처음 나타날 때 실행
     LaunchedEffect(Unit) {
         while (true) {
             delay(1000)
@@ -1298,40 +1306,61 @@ fun TimerScreen() {
 - [ ] `derivedStateOf`를 사용할 수 있다
 - [ ] `rememberSaveable`의 용도를 안다
 - [ ] `LaunchedEffect`로 비동기 작업을 할 수 있다
+- [ ] **04-1 고급 패턴 문서를 학습할 준비가 되었다** ⭐
 
 ---
 
-## 실습 프로젝트
+## 실습 프로젝트 (미리보기)
 
-### 프로젝트 1: 계산기 앱
-**난이도**: ⭐⭐  
-**학습 내용**: State 기초, State Hoisting
+> [!NOTE]
+> **실습 프로젝트의 상세한 구현은 별도 문서로 이동했습니다!**
+> 
+> 완성된 프로젝트 코드와 단계별 가이드는:
+> **[04-2. State 실전 프로젝트](./04-2-jetpack-compose-state-projects.md)**
 
-**요구사항**:
-- 숫자 버튼 (0-9)
-- 연산자 버튼 (+, -, ×, ÷)
-- 결과 표시
-- 초기화 버튼
-
-### 프로젝트 2: 메모 앱
+### 프로젝트 1: 메모 앱
 **난이도**: ⭐⭐⭐  
-**학습 내용**: ViewModel, StateFlow, CRUD
+**학습 내용**: ViewModel, StateFlow, CRUD, 검색
 
-**요구사항**:
-- 메모 추가/수정/삭제
-- 메모 목록 표시
-- 검색 기능
-- 화면 회전 시 데이터 유지
-
-### 프로젝트 3: 타이머 앱
+### 프로젝트 2: 타이머 앱
 **난이도**: ⭐⭐⭐⭐  
-**학습 내용**: LaunchedEffect, 고급 State
+**학습 내용**: LaunchedEffect, 백그라운드, 알림
 
-**요구사항**:
-- 시간 설정
-- 시작/일시정지/초기화
-- 백그라운드에서도 동작
-- 알림 기능
+### 프로젝트 3: 채팅 앱 UI
+**난이도**: ⭐⭐⭐⭐  
+**학습 내용**: Flow, 무한 스크롤, 성능 최적화
+
+---
+
+## 🎯 다음 학습 단계
+
+### ✅ 이 문서에서 배운 것
+
+- remember와 Composition Tree의 동작 원리
+- State Hoisting과 단방향 데이터 흐름
+- ViewModel과 ViewModelStore의 생명주기
+- StateFlow를 사용한 State 관리
+- derivedStateOf, rememberSaveable, LaunchedEffect 기초
+
+### 📚 다음에 배울 것
+
+#### 1단계: 고급 패턴 (필수)
+**[04-1. State 고급 패턴](./04-1-jetpack-compose-state-advanced.md)**
+- Side Effect 완벽 가이드 (LaunchedEffect, DisposableEffect, SideEffect)
+- 고급 State 패턴 (produceState, snapshotFlow, rememberUpdatedState)
+- 성능 최적화 (Recomposition, Immutable, Key)
+- State 테스팅
+
+#### 2단계: 실전 프로젝트 (필수)
+**[04-2. State 실전 프로젝트](./04-2-jetpack-compose-state-projects.md)**
+- 메모 앱 (CRUD, 검색, 정렬)
+- 타이머 앱 (백그라운드, 알림)
+- 채팅 앱 UI (Flow, 무한 스크롤)
+
+#### 3단계: 실무 적용
+- 자신만의 앱 개발
+- 아키텍처 패턴 (MVI, Clean Architecture)
+- 프로덕션 배포
 
 ---
 
