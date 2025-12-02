@@ -1,19 +1,20 @@
 # Kotlin Multiplatform Mobile 가이드
 
-## 목차
-1. [KMM이란?](#kmm이란)
-2. [프로젝트 설정](#프로젝트-설정)
-3. [공통 비즈니스 로직](#공통-비즈니스-로직)
-4. [Expect/Actual](#expectactual)
-5. [네이티브 상호운용](#네이티브-상호운용)
-6. [SQLDelight](#sqldelight)
-7. [Ktor](#ktor)
-8. [실전 예제](#실전-예제)
-9. [문제 해결](#문제-해결)
+> [!NOTE]
+> **이 문서는 보강된 종합 가이드로 대체되었습니다!**
+> 
+> **[👉 74-2. KMM 종합 가이드로 이동](./74-2-kotlin-multiplatform-mobile-guide-enhanced.md)**
+> 
+> 267줄 → 약 1,200줄로 확장하여 다음 내용을 추가했습니다:
+> - 상세한 프로젝트 설정 가이드
+> - Clean Architecture 적용
+> - 실전 Todo 앱 예제
+> - Android/iOS 통합 가이드
+> - 베스트 프랙티스
 
 ---
 
-## KMM이란?
+
 
 **Kotlin Multiplatform Mobile (KMM)**은 Android와 iOS 간 코드를 공유할 수 있는 기술입니다.
 

@@ -1,20 +1,26 @@
 # Android WindowManager 가이드
 
-## 목차
-1. [WindowManager란?](#windowmanager란)
-2. [Window Size Classes](#window-size-classes)
-3. [Foldable 지원](#foldable-지원)
-4. [멀티 윈도우](#멀티-윈도우)
-5. [Activity Embedding](#activity-embedding)
-6. [반응형 레이아웃](#반응형-레이아웃)
-7. [실전 예제](#실전-예제)
-8. [문제 해결](#문제-해결)
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> WindowManager를 더 체계적으로 학습할 수 있도록 4개의 상세한 문서로 분할되었습니다:
+> 
+> 1. **[73-1. 폴더블의 역사](./73-1-foldable-history.md)** - 폴더블 디바이스의 발전
+> 2. **[73-2. WindowManager 기본 가이드](./73-2-android-window-manager-basics.md)** - Window Size Classes, Foldable 지원 (약 800줄)
+> 3. **[73-3. WindowManager 고급 가이드](./73-3-android-window-manager-advanced.md)** - 반응형 패턴, Activity Embedding (약 400줄)
+> 4. **[73-4. WindowManager 실전 프로젝트](./73-4-android-window-manager-projects.md)** - 이메일, 뉴스 앱 (약 300줄)
+> 
+> **총 분량**: 약 1,500줄의 상세한 설명과 주석이 포함된 코드 예제
 
 ---
 
-## WindowManager란?
+## 🚀 빠른 시작
 
-**WindowManager**는 대형 화면(태블릿, 폴더블, 데스크톱)에 최적화된 앱을 만들기 위한 Jetpack 라이브러리입니다.
+**[👉 73-2. WindowManager 기본 가이드로 이동](./73-2-android-window-manager-basics.md)**
+
+---
+
+
 
 ### 주요 기능
 - 📱 **Window Size Classes**: 화면 크기별 레이아웃
