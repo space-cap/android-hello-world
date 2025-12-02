@@ -235,7 +235,266 @@ fun RecompositionDemo() {
 > - State가 변경되면 전체 UI가 아닌 **필요한 부분만** 다시 그려집니다
 > - 성능 최적화가 자동으로 이루어집니다
 
-### 1.5 Level 1 체크리스트
+### 1.5 Composition Tree와 remember의 비밀 🔍
+
+#### 자주 하는 질문
+
+> "함수가 다시 실행되면 변수가 초기화되는 거 아니야?"  
+> "어떻게 Recomposition 시에도 값이 유지되지?"
+
+이것이 바로 Compose의 핵심 마법입니다!
+
+#### ❌ 흔한 오해
+
+```kotlin
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }
+    // "함수가 다시 호출되면 count가 0으로 초기화되는 거 아니야?"
+}
+```
+
+**정답**: 아닙니다! Composable 함수는 일반 함수와 다르게 동작합니다.
+
+#### ✅ 핵심 개념: Composition Tree
+
+Compose는 **Composition Tree**라는 특별한 자료구조를 메모리에 유지합니다:
+
+```
+Composition Tree (메모리에 계속 존재)
+├─ Counter (위치 #1)
+│  └─ State: count = 5  ← 여기에 저장됨!
+├─ Counter (위치 #2)
+│  └─ State: count = 3  ← 각각 독립적!
+└─ Text (위치 #3)
+   └─ State: (없음)
+```
+
+#### 🎬 단계별 동작 과정
+
+**1️⃣ 첫 실행 (Initial Composition)**
+
+```kotlin
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }  // ← 여기!
+    
+    Button(onClick = { count++ }) {
+        Text("카운트: $count")
+    }
+}
+```
+
+내부 동작:
+```
+1. Compose: "Counter 함수를 실행하네?"
+2. Compose: "remember를 만났어. 이 위치(#1)에 State를 저장할게"
+3. Compose: "mutableStateOf(0) 실행 → 초기값 0"
+4. Composition Tree에 저장:
+   위치 #1 → State(value=0)
+```
+
+**2️⃣ 버튼 클릭 (State 변경)**
+
+```kotlin
+Button(onClick = { count++ })  // count = 0 → 1
+```
+
+내부 동작:
+```
+1. count++ 실행
+2. Composition Tree 업데이트:
+   위치 #1 → State(value=1)  ← 값만 변경!
+3. Compose: "State가 변경됐네? Recomposition 필요!"
+```
+
+**3️⃣ Recomposition (함수 재실행)**
+
+```kotlin
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }  // ← 다시 실행!
+    // ...
+}
+```
+
+내부 동작 (중요!):
+```
+1. Compose: "Counter 함수를 다시 실행하네?"
+2. Compose: "remember를 만났어. 어? 이 위치(#1)에 이미 State가 있네?"
+3. Compose: "mutableStateOf(0)은 건너뛰고, 저장된 값(1)을 가져올게"
+4. count = 1 (저장된 값 사용!)
+```
+
+#### 💡 remember의 실제 동작 (간단히)
+
+```kotlin
+// Compose 내부 동작 (의사 코드)
+@Composable
+fun <T> remember(calculation: () -> T): T {
+    val compositionId = getCurrentCompositionId()  // 예: "#1"
+    
+    // 이미 저장된 값이 있나?
+    if (compositionTree.hasValue(compositionId)) {
+        // 있으면 저장된 값 반환 (calculation 실행 안 함!)
+        return compositionTree.getValue(compositionId)
+    } else {
+        // 없으면 calculation 실행하고 저장
+        val value = calculation()  // mutableStateOf(0) 실행
+        compositionTree.setValue(compositionId, value)
+        return value
+    }
+}
+```
+
+#### 🔬 실제 확인해보기
+
+```kotlin
+@Composable
+fun CounterWithLog() {
+    println("🔵 Counter 함수 시작")
+    
+    var count by remember { 
+        println("🟢 mutableStateOf 실행!")
+        mutableStateOf(0) 
+    }
+    
+    println("🔴 현재 count = $count")
+    
+    Button(onClick = { count++ }) {
+        Text("카운트: $count")
+    }
+}
+```
+
+**실행 결과**:
+
+```
+// 첫 실행
+🔵 Counter 함수 시작
+🟢 mutableStateOf 실행!  ← 초기화
+🔴 현재 count = 0
+
+// 버튼 클릭 후 Recomposition
+🔵 Counter 함수 시작
+🔴 현재 count = 1  ← mutableStateOf 실행 안 됨!
+
+// 또 클릭
+🔵 Counter 함수 시작
+🔴 현재 count = 2  ← mutableStateOf 실행 안 됨!
+```
+
+**주목**: `mutableStateOf`는 **첫 실행 때만** 실행됩니다!
+
+#### 📊 일반 함수 vs Composable 함수
+
+| 특성 | 일반 함수 | Composable 함수 |
+|------|----------|----------------|
+| **호출 시** | 새로운 스택 프레임 생성 | Composition Tree에서 위치 찾기 |
+| **지역 변수** | 스택에 저장 → 함수 종료 시 사라짐 | 일반 변수는 동일 |
+| **remember 변수** | (없음) | Composition Tree에 저장 → 유지됨 ✅ |
+| **재호출 시** | 모든 변수 초기화 | remember 변수는 유지됨 |
+
+#### 🎯 State vs Static 변수
+
+많은 사람들이 "State가 static 변수인가?"라고 생각하지만, **아닙니다!**
+
+```kotlin
+@Composable
+fun CounterDemo() {
+    Column {
+        Counter()  // 첫 번째 Counter
+        Counter()  // 두 번째 Counter
+    }
+}
+
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }
+    
+    Button(onClick = { count++ }) {
+        Text("카운트: $count")
+    }
+}
+```
+
+**결과**:
+- 첫 번째 Counter 클릭 → 첫 번째만 증가 (1, 0)
+- 두 번째 Counter 클릭 → 두 번째만 증가 (1, 1)
+- **각각 독립적인 State를 가짐!**
+
+만약 static이었다면:
+- 첫 번째 클릭 → 둘 다 1
+- 두 번째 클릭 → 둘 다 2
+
+#### 🏗️ Composition Tree 구조 예시
+
+```kotlin
+@Composable
+fun App() {
+    Column {
+        Counter()  // 위치 #1
+        Counter()  // 위치 #2
+        Text("안녕")  // 위치 #3
+    }
+}
+```
+
+**메모리 구조**:
+```
+Composition Tree
+├─ Column
+│  ├─ Counter (슬롯 #1)
+│  │  └─ remember 슬롯 → State(count=5)
+│  ├─ Counter (슬롯 #2)
+│  │  └─ remember 슬롯 → State(count=3)
+│  └─ Text (슬롯 #3)
+│     └─ (State 없음)
+```
+
+각 `Counter`는 **자기만의 슬롯**을 가지므로 독립적입니다!
+
+#### 💡 비유로 이해하기
+
+**일반 함수**:
+- 메모장에 적기 (함수 끝나면 버림)
+- 매번 새로운 종이 사용
+
+**Composable 함수 + remember**:
+- 노트북에 저장하기 (계속 유지)
+- Composition Tree = 그 노트북
+- 위치 ID = 페이지 번호
+- 같은 페이지를 계속 업데이트
+
+#### ✅ 핵심 정리
+
+```kotlin
+@Composable
+fun Counter() {
+    // 일반 변수: 매번 초기화
+    var temp = 0
+    
+    // State 변수: Composition Tree에 저장되어 유지
+    var count by remember { mutableStateOf(0) }
+    
+    println("temp = $temp")    // 항상 0
+    println("count = $count")  // 증가된 값 유지
+}
+```
+
+**왜 유지되는가?**
+1. `remember`는 Composition Tree에 값을 저장
+2. Recomposition 시 함수는 재실행되지만
+3. `remember`는 "이미 저장된 값이 있네?" 하고 그 값을 반환
+4. `mutableStateOf(0)`은 첫 실행 때만 실행됨
+
+> [!TIP]
+> **핵심 포인트**
+> - Composable 함수는 재실행되지만, `remember`로 감싼 값은 **별도의 저장소(Composition Tree)**에 보관
+> - 각 Composable 인스턴스는 **독립적인 슬롯**을 가짐
+> - State는 static이 아니라 **"Recomposition 시에도 유지되는 인스턴스 변수"**
+
+### 1.6 Level 1 체크리스트
 
 완료한 항목에 체크하세요:
 
@@ -243,6 +502,8 @@ fun RecompositionDemo() {
 - [ ] `mutableStateOf`로 State를 생성할 수 있다
 - [ ] `by` 키워드의 의미를 안다
 - [ ] Recomposition 개념을 이해했다
+- [ ] **Composition Tree와 remember의 동작 원리를 이해했다** ⭐
+- [ ] **State가 static 변수가 아닌 이유를 안다** ⭐
 - [ ] 카운터 앱을 직접 만들어봤다
 - [ ] TextField와 State를 연동해봤다
 
