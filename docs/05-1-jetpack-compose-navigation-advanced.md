@@ -211,17 +211,6 @@ sealed class BottomNavItem(
 
 ### 2. Scaffold와 연동
 
-```kotlin
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    
-    // 현재 보고 있는 화면의 Route를 감지
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-    
-### 2. Scaffold와 연동
-
 `Scaffold`는 Material Design의 기본 레이아웃 구조를 구현해주는 Composable입니다. TopBar, BottomBar, FloatingActionButton 등을 슬롯 API로 쉽게 배치할 수 있게 해줍니다.
 
 **Navigation과 함께 사용할 때의 핵심 구조:**
