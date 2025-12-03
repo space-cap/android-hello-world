@@ -1,299 +1,150 @@
 # Android 디버깅 가이드
 
-## 📚 목차
-
-1. [Logcat 사용법](#logcat-사용법)
-2. [Breakpoint 디버깅](#breakpoint-디버깅)
-3. [Layout Inspector](#layout-inspector)
-4. [자주 발생하는 에러](#자주-발생하는-에러)
-5. [성능 프로파일링](#성능-프로파일링)
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> 디버깅을 더 체계적으로 학습할 수 있도록 3개의 상세한 문서로 분할되었습니다:
+> 
+> 1. **[16-1. Android 디버깅 기초](./16-1-android-debugging-basics.md)** - Logcat, Breakpoint, Layout Inspector
+> 2. **[16-2. Android 디버깅 고급](./16-2-android-debugging-advanced.md)** - Database/Network/Background Inspector, ANR, StrictMode
+> 3. **[16-3. Android 디버깅 실전](./16-3-android-debugging-scenarios.md)** - 실전 문제 해결 시나리오
+> 
+> **총 분량**: 약 3,000줄의 상세한 설명과 주석이 포함된 코드 예제
 
 ---
 
-## Logcat 사용법
+## 📚 새로운 시리즈 구성
 
-### 기본 로깅
+### 16-1. Android 디버깅 기초 (⭐ 초보자 시작점)
+- **Logcat 사용법**: 로그 레벨, Timber 라이브러리
+- **Breakpoint 디버깅**: 조건부 Breakpoint, 로그 Breakpoint, 디버거 단축키
+- **Layout Inspector**: UI 계층 구조 확인, 속성 검사
+- **Compose Layout Inspector**: Recomposition 카운트, Modifier 검사
+- **자주 발생하는 에러**: NPE, IndexOutOfBounds, ConcurrentModification 등
 
-```kotlin
-import android.util.Log
+### 16-2. Android 디버깅 고급
+- **Database Inspector**: Room 데이터베이스 실시간 조회 및 수정
+- **Network Inspector**: HTTP 요청/응답 모니터링, 타이밍 분석
+- **Background Task Inspector**: WorkManager 작업 상태 확인
+- **ANR 분석**: ANR 발생 원인 및 방지 방법
+- **StrictMode**: 메인 스레드 위반 감지, 메모리 누수 감지
+- **성능 프로파일링**: CPU/Memory/Network Profiler
 
-class MainActivity : ComponentActivity() {
-    companion object {
-        private const val TAG = "MainActivity"
-    }
+### 16-3. Android 디버깅 실전
+- **앱 크래시 디버깅**: 스택 트레이스 분석, Crashlytics 통합
+- **UI 버그 해결**: 텍스트 잘림, 리스트 스크롤 끊김
+- **성능 문제 해결**: 앱 시작 느림, 이미지 로딩 느림
+- **네트워크 문제 해결**: API 호출 실패, 타임아웃 에러
+- **메모리 누수 해결**: Heap Dump 분석, Activity 누수
+- **Compose 특화 디버깅**: State 업데이트 문제, LaunchedEffect 무한 루프
+
+---
+
+## 🎯 학습 로드맵
+
+```mermaid
+graph LR
+    A[16-1<br/>기초] --> B[16-2<br/>고급]
+    B --> C[16-3<br/>실전]
     
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        Log.v(TAG, "Verbose log")
-        Log.d(TAG, "Debug log")
-        Log.i(TAG, "Info log")
-        Log.w(TAG, "Warning log")
-        Log.e(TAG, "Error log")
-    }
-}
+    A -.-> D[기본 디버깅<br/>가능]
+    B -.-> E[고급 도구<br/>활용 가능]
+    C -.-> F[실전 문제<br/>해결 가능]
 ```
 
-### 로그 레벨
+### 추천 학습 순서
 
-| 레벨 | 메서드 | 용도 |
-|------|--------|------|
-| Verbose | `Log.v()` | 상세한 정보 |
-| Debug | `Log.d()` | 디버깅 정보 |
-| Info | `Log.i()` | 일반 정보 |
-| Warning | `Log.w()` | 경고 |
-| Error | `Log.e()` | 에러 |
+#### 1단계: 기초 (1-2일)
+- **16-1**: 디버깅 기초 학습 (1-2일)
+  - Logcat 사용법
+  - Breakpoint 설정
+  - Layout Inspector 활용
 
-### 예외 로깅
+#### 2단계: 고급 (2-3일)
+- **16-2**: 고급 디버깅 도구 (2-3일)
+  - Database/Network Inspector
+  - ANR 분석
+  - StrictMode 활용
 
-```kotlin
-try {
-    // 위험한 작업
-    riskyOperation()
-} catch (e: Exception) {
-    Log.e(TAG, "Error occurred", e)
-}
-```
-
-### Timber 라이브러리
-
-```kotlin
-// build.gradle.kts
-dependencies {
-    implementation("com.jakewharton.timber:timber:5.0.1")
-}
-
-// Application 클래스
-class MyApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-    }
-}
-
-// 사용
-Timber.d("Debug message")
-Timber.e(exception, "Error message")
-```
+#### 3단계: 실전 (지속적)
+- **16-3**: 실전 문제 해결 (지속적)
+  - 실제 발생하는 문제 해결
+  - 베스트 프랙티스 적용
 
 ---
 
-## Breakpoint 디버깅
+## 💡 새로운 시리즈의 특징
 
-### Breakpoint 설정
+### ✅ 초보자 친화적
+- 모든 개념을 처음부터 설명
+- 전문 용어는 한글 설명 병기
+- 단계별 가이드 제공
 
-1. 코드 라인 번호 옆 클릭
-2. 빨간 점이 표시됨
-3. 디버그 모드로 앱 실행
-
-### 조건부 Breakpoint
-
+### ✅ 상세한 주석
 ```kotlin
-fun processItems(items: List<Item>) {
-    items.forEach { item ->
-        // Breakpoint 우클릭 → Condition
-        // 조건: item.id == 5
-        processItem(item)
-    }
+/**
+ * Breakpoint 설정 예제
+ * 
+ * 이 함수에서 Breakpoint를 설정하면
+ * 변수 값을 확인할 수 있습니다.
+ */
+fun processData(data: List<Item>) {
+    // Breakpoint 설정 ← 여기
+    val filtered = data.filter { it.isValid }
 }
 ```
 
-### 로그 Breakpoint
+### ✅ 실행 가능한 코드
+- 모든 예제는 복사-붙여넣기로 실행 가능
+- 필요한 import 문 포함
+- 에러 처리 포함
 
-Breakpoint 우클릭 → "Breakpoint Properties"
-- ✅ Suspend: 체크 해제
-- ✅ Log: "Evaluate and log" 체크
-- 표현식 입력: `"Item: ${item.name}"`
-
-### 디버거 단축키
-
-| 단축키 | 기능 |
-|--------|------|
-| F8 | Step Over (다음 줄) |
-| F7 | Step Into (함수 안으로) |
-| Shift+F8 | Step Out (함수 밖으로) |
-| F9 | Resume (다음 Breakpoint까지) |
+### ✅ 실전 시나리오
+- 실제 발생하는 문제 12가지
+- 단계별 해결 과정
+- 베스트 프랙티스 포함
 
 ---
 
-## Layout Inspector
+## 🚀 빠른 시작
 
-### 사용 방법
+디버깅을 처음 시작한다면:
 
-1. **View → Tool Windows → Layout Inspector**
-2. 실행 중인 앱 선택
-3. UI 계층 구조 확인
+1. **[16-1. Android 디버깅 기초](./16-1-android-debugging-basics.md)** 로 시작하세요
+2. Logcat 사용법을 익히세요
+3. Breakpoint를 설정하고 변수를 확인하세요
+4. Layout Inspector로 UI를 분석하세요
 
-### 주요 기능
+이미 기본 디버깅을 알고 있다면:
 
-- **3D 뷰**: UI 계층을 3D로 확인
-- **속성 검사**: 선택한 컴포넌트의 속성 확인
-- **레이아웃 경계**: 각 요소의 크기와 위치 확인
-
----
-
-## 자주 발생하는 에러
-
-### 1. NullPointerException
-
-```kotlin
-// ❌ 문제
-val user: User? = getUser()
-val name = user.name // NPE 발생 가능
-
-// ✅ 해결
-val name = user?.name ?: "Unknown"
-```
-
-### 2. IndexOutOfBoundsException
-
-```kotlin
-// ❌ 문제
-val item = list[5] // 리스트 크기가 5 이하면 에러
-
-// ✅ 해결
-val item = list.getOrNull(5)
-```
-
-### 3. ConcurrentModificationException
-
-```kotlin
-// ❌ 문제
-list.forEach { item ->
-    if (item.shouldRemove) {
-        list.remove(item) // 에러!
-    }
-}
-
-// ✅ 해결
-list.removeAll { it.shouldRemove }
-```
-
-### 4. NetworkOnMainThreadException
-
-```kotlin
-// ❌ 문제
-fun loadData() {
-    val data = apiService.getData() // 메인 스레드에서 네트워크 호출
-}
-
-// ✅ 해결
-fun loadData() {
-    viewModelScope.launch {
-        val data = apiService.getData()
-    }
-}
-```
-
-### 5. Compose Recomposition 문제
-
-```kotlin
-// ❌ 문제: 매번 새로운 객체 생성
-@Composable
-fun MyScreen() {
-    val viewModel = MyViewModel() // 재구성마다 새로 생성
-}
-
-// ✅ 해결
-@Composable
-fun MyScreen(viewModel: MyViewModel = viewModel()) {
-    // viewModel()은 재구성 시 유지됨
-}
-```
+1. **[16-2. Android 디버깅 고급](./16-2-android-debugging-advanced.md)** 으로 바로 이동
+2. Database/Network Inspector 활용법 학습
+3. ANR과 StrictMode로 문제 조기 발견
+4. **[16-3. Android 디버깅 실전](./16-3-android-debugging-scenarios.md)** 으로 실전 문제 해결
 
 ---
 
-## 성능 프로파일링
+## 📊 문서 비교
 
-### CPU Profiler
-
-1. **View → Tool Windows → Profiler**
-2. **CPU** 선택
-3. 앱 실행 및 프로파일링 시작
-4. 느린 함수 찾기
-
-### Memory Profiler
-
-1. **Memory** 탭 선택
-2. 메모리 누수 확인
-3. Heap Dump 분석
-
-### 성능 최적화 팁
-
-```kotlin
-// ✅ remember 사용
-@Composable
-fun ExpensiveComposable() {
-    val expensiveValue = remember {
-        calculateExpensiveValue()
-    }
-}
-
-// ✅ derivedStateOf 사용
-@Composable
-fun FilteredList(items: List<Item>, query: String) {
-    val filteredItems = remember(items, query) {
-        items.filter { it.name.contains(query) }
-    }
-}
-
-// ✅ key 사용
-LazyColumn {
-    items(items, key = { it.id }) { item ->
-        ItemRow(item)
-    }
-}
-```
+| 구분 | 기존 문서 | 새로운 시리즈 |
+|------|----------|--------------|
+| 분량 | 300줄 | 약 3,000줄 |
+| 파일 수 | 1개 | 3개 |
+| 설명 수준 | 간략 | 매우 상세 |
+| 코드 주석 | 기본 | 풍부 |
+| 실전 예제 | 없음 | 12개 시나리오 |
+| 초보자 친화성 | 보통 | 매우 높음 |
 
 ---
 
-## 💡 디버깅 팁
+## 🎯 지금 바로 시작하세요!
 
-### 1. 로그는 의미 있게
-
-```kotlin
-// ❌ 나쁜 예
-Log.d(TAG, "here")
-
-// ✅ 좋은 예
-Log.d(TAG, "User login successful: ${user.email}")
-```
-
-### 2. 에러 처리는 구체적으로
-
-```kotlin
-// ✅ 구체적인 에러 처리
-try {
-    loadData()
-} catch (e: IOException) {
-    Log.e(TAG, "Network error", e)
-} catch (e: JsonParseException) {
-    Log.e(TAG, "JSON parsing error", e)
-}
-```
-
-### 3. TODO 주석 활용
-
-```kotlin
-// TODO: 성능 최적화 필요
-// FIXME: 버그 수정 필요
-// HACK: 임시 해결책
-```
+**[👉 16-1. Android 디버깅 기초로 이동](./16-1-android-debugging-basics.md)**
 
 ---
 
-## 🎯 다음 단계
-
-디버깅을 마스터했습니다! 마지막으로:
-
-1. **앱 배포** - Google Play 배포
-
----
-
-**마지막 업데이트**: 2025-11-30  
+**마지막 업데이트**: 2024-12-03  
 **작성자**: Antigravity AI Assistant
 
 Happy Debugging! 🐛
+

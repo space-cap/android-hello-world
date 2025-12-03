@@ -1,13 +1,153 @@
 # Android 앱 배포 가이드
 
-## 📚 목차
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> 앱 배포를 더 체계적으로 학습할 수 있도록 3개의 상세한 문서로 분할되었습니다:
+> 
+> 1. **[17-1. Android 앱 서명](./17-1-android-app-signing.md)** - 키스토어 생성, 앱 서명, Play App Signing, 보안
+> 2. **[17-2. Android Play Console 가이드](./17-2-android-play-console-guide.md)** - Play Console 상세 가이드
+> 3. **[17-3. Android 배포 체크리스트](./17-3-android-deployment-checklist.md)** - 배포 체크리스트 및 베스트 프랙티스
+> 
+> **총 분량**: 약 2,500줄의 상세한 설명과 주석이 포함된 코드 예제
 
-1. [배포 준비](#배포-준비)
-2. [APK/AAB 빌드](#apkaab-빌드)
-3. [앱 서명](#앱-서명)
-4. [Google Play Console](#google-play-console)
-5. [버전 관리](#버전-관리)
-6. [ProGuard/R8](#proguardr8)
+---
+
+## 📚 새로운 시리즈 구성
+
+### 17-1. Android 앱 서명 (⭐ 시작점)
+- **앱 서명이란?**: 목적, 필요성, 프로세스
+- **키스토어 생성**: keytool, Android Studio
+- **앱 서명 설정**: Gradle, 환경 변수, CI/CD
+- **Play App Signing**: Upload Key vs App Signing Key
+- **보안 베스트 프랙티스**: 키스토어 보안, 코드 보안
+
+### 17-2. Android Play Console 가이드
+- **Play Console 시작하기**: 개발자 계정 생성
+- **앱 생성 및 기본 설정**: 앱 이름, 언어, 유형
+- **스토어 등록정보**: 아이콘, 스크린샷, 설명
+- **앱 콘텐츠**: 콘텐츠 등급, 대상 고객, 개인정보처리방침
+- **테스트 및 출시**: 내부/비공개/공개 테스트, 프로덕션 출시
+- **출시 후 관리**: 통계, 리뷰, 업데이트, A/B 테스팅
+
+### 17-3. Android 배포 체크리스트
+- **배포 전 체크리스트**: 코드 품질, 앱 설정, 리소스 최적화, 보안
+- **버전 관리 전략**: 시맨틱 버저닝, versionCode 관리, 출시 노트
+- **AAB vs APK**: 장단점 비교, 빌드 방법, 권장 사항
+- **ProGuard/R8 설정**: 기본 설정, 규칙 작성, 테스트
+- **배포 전략**: 단계적 출시, 롤백 계획, 출시 일정
+- **출시 후 모니터링**: 크래시/ANR, 성능 지표, 사용자 피드백
+
+---
+
+## 🎯 학습 로드맵
+
+```mermaid
+graph LR
+    A[17-1<br/>앱 서명] --> B[17-2<br/>Play Console]
+    B --> C[17-3<br/>체크리스트]
+    
+    A -.-> D[앱 서명<br/>완료]
+    B -.-> E[Play Store<br/>등록 가능]
+    C -.-> F[프로덕션<br/>출시 가능]
+```
+
+### 추천 학습 순서
+
+#### 1단계: 앱 서명 (1일)
+- **17-1**: 앱 서명 학습 (1일)
+  - 키스토어 생성
+  - Gradle 서명 설정
+  - Play App Signing 이해
+
+#### 2단계: Play Console (1-2일)
+- **17-2**: Play Console 가이드 (1-2일)
+  - 개발자 계정 생성
+  - 앱 등록 및 정보 입력
+  - 테스트 트랙 활용
+
+#### 3단계: 배포 준비 (1일)
+- **17-3**: 배포 체크리스트 (1일)
+  - 배포 전 점검
+  - ProGuard 설정
+  - 단계적 출시 계획
+
+---
+
+## 💡 새로운 시리즈의 특징
+
+### ✅ 초보자 친화적
+- 모든 개념을 처음부터 설명
+- 단계별 가이드 제공
+- 스크린샷 및 예시 포함
+
+### ✅ 상세한 주석
+```kotlin
+/**
+ * 키스토어 설정 파일 로드
+ * 
+ * keystore.properties 파일에서 서명 정보를 읽어옵니다.
+ * 이렇게 하면 비밀번호를 코드에 직접 작성하지 않아도 됩니다.
+ */
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+```
+
+### ✅ 실행 가능한 코드
+- 모든 예제는 복사-붙여넣기로 실행 가능
+- 필요한 설정 파일 포함
+- 에러 처리 포함
+
+### ✅ 실전 체크리스트
+- 배포 전 체크리스트
+- 단계별 출시 계획
+- 출시 후 모니터링 가이드
+
+---
+
+## 🚀 빠른 시작
+
+앱 배포를 처음 시작한다면:
+
+1. **[17-1. Android 앱 서명](./17-1-android-app-signing.md)** 로 시작하세요
+2. 키스토어를 생성하세요
+3. Gradle에 서명 설정을 추가하세요
+4. Play App Signing을 활성화하세요
+
+이미 앱 서명을 완료했다면:
+
+1. **[17-2. Android Play Console 가이드](./17-2-android-play-console-guide.md)** 로 바로 이동
+2. Play Console에 앱 등록
+3. 스토어 등록정보 입력
+4. **[17-3. Android 배포 체크리스트](./17-3-android-deployment-checklist.md)** 로 배포 준비
+
+---
+
+## 📊 문서 비교
+
+| 구분 | 기존 문서 | 새로운 시리즈 |
+|------|----------|--------------|
+| 분량 | 358줄 | 약 2,500줄 |
+| 파일 수 | 1개 | 3개 |
+| 설명 수준 | 간략 | 매우 상세 |
+| 코드 주석 | 기본 | 풍부 |
+| 체크리스트 | 간단 | 상세 (단계별) |
+| 초보자 친화성 | 보통 | 매우 높음 |
+
+---
+
+## 🎯 지금 바로 시작하세요!
+
+**[👉 17-1. Android 앱 서명으로 이동](./17-1-android-app-signing.md)**
+
+---
+
+**마지막 업데이트**: 2024-12-03  
+**작성자**: Antigravity AI Assistant
+
+Happy Deploying! 🚀
+
 
 ---
 

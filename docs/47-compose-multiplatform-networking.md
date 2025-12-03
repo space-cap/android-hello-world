@@ -1,12 +1,132 @@
-# Compose Multiplatform 네트워킹 및 데이터베이스
+# Compose Multiplatform 네트워킹 가이드
 
-## 목차
-1. [Ktor Client 소개](#ktor-client-소개)
-2. [HTTP 요청](#http-요청)
-3. [JSON 파싱](#json-파싱)
-4. [에러 처리](#에러-처리)
-5. [SQLDelight 데이터베이스](#sqldelight-데이터베이스)
-6. [실전 예제: REST API 앱](#실전-예제-rest-api-앱)
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> Compose Multiplatform 네트워킹을 더 체계적으로 학습할 수 있도록 3개의 상세한 문서로 분할되었습니다:
+> 
+> 1. **[47-1. Compose Multiplatform 네트워킹 기초](./47-1-compose-multiplatform-networking-basics.md)** - Ktor Client, HTTP 요청, JSON 직렬화
+> 2. **[47-2. Compose Multiplatform 네트워킹 고급](./47-2-compose-multiplatform-networking-advanced.md)** - 인증, 캐싱, WebSocket, 파일 업로드/다운로드
+> 3. **[47-3. Compose Multiplatform 네트워킹 플랫폼](./47-3-compose-multiplatform-networking-platform.md)** - Android/iOS/Desktop 플랫폼별 구현
+
+---
+
+## 📚 새로운 시리즈 구성
+
+### 47-1. Compose Multiplatform 네트워킹 기초 (⭐ 시작점)
+- **Ktor Client 소개**: 멀티플랫폼 HTTP 클라이언트
+- **프로젝트 설정**: 의존성 추가, 클라이언트 생성
+- **HTTP 요청**: GET, POST, PUT, DELETE
+- **JSON 직렬화**: Kotlinx Serialization, 자동 변환
+- **에러 처리**: Result 패턴, 재시도 로직
+
+### 47-2. Compose Multiplatform 네트워킹 고급
+- **인증 및 토큰 관리**: Bearer Token, 자동 갱신
+- **캐싱 전략**: 메모리 캐시, TTL
+- **WebSocket 실시간 통신**: 채팅 구현
+- **파일 업로드/다운로드**: 멀티파트, 진행률 표시
+
+### 47-3. Compose Multiplatform 네트워킹 플랫폼
+- **플랫폼별 HTTP 엔진**: OkHttp, Darwin, CIO
+- **Android 특화 구현**: 네트워크 상태 모니터
+- **iOS 특화 구현**: URLSession 활용
+- **Desktop 특화 구현**: 순수 Kotlin 구현
+
+---
+
+## 🎯 학습 로드맵
+
+```mermaid
+graph LR
+    A[47-1<br/>기초] --> B[47-2<br/>고급]
+    B --> C[47-3<br/>플랫폼]
+    
+    A -.-> D[HTTP 요청<br/>가능]
+    B -.-> E[실시간 통신<br/>가능]
+    C -.-> F[멀티플랫폼<br/>완성]
+```
+
+### 추천 학습 순서
+
+#### 1단계: 기초 (1-2일)
+- **47-1**: 네트워킹 기초 (1-2일)
+  - Ktor Client 설정
+  - HTTP 요청 (GET, POST, PUT, DELETE)
+  - JSON 직렬화
+
+#### 2단계: 고급 (2-3일)
+- **47-2**: 고급 기능 (2-3일)
+  - 인증 및 토큰 관리
+  - 캐싱 전략
+  - WebSocket
+
+#### 3단계: 플랫폼 (1일)
+- **47-3**: 플랫폼별 구현 (1일)
+  - Android/iOS/Desktop 특화
+  - 네트워크 상태 모니터링
+
+---
+
+## 💡 새로운 시리즈의 특징
+
+### ✅ 멀티플랫폼 중심
+- Android, iOS, Desktop에서 동일한 코드 사용
+- 플랫폼별 최적화 방법 제공
+
+### ✅ 상세한 주석
+```kotlin
+/**
+ * HTTP 클라이언트 생성 함수
+ * 
+ * 앱 전체에서 재사용할 수 있는 Ktor Client를 생성합니다.
+ * 싱글톤 패턴으로 사용하는 것이 좋습니다.
+ */
+fun createHttpClient(): HttpClient {
+    return HttpClient {
+        install(ContentNegotiation) {
+            json()
+        }
+    }
+}
+```
+
+### ✅ 실전 예제
+- Repository 패턴
+- 에러 처리
+- 재시도 로직
+- 캐싱 전략
+
+---
+
+## 🚀 빠른 시작
+
+Compose Multiplatform 네트워킹을 처음 시작한다면:
+
+1. **[47-1. Compose Multiplatform 네트워킹 기초](./47-1-compose-multiplatform-networking-basics.md)** 로 시작하세요
+2. Ktor Client를 설정하세요
+3. HTTP 요청을 보내보세요
+4. JSON 직렬화를 익히세요
+
+이미 기본을 알고 있다면:
+
+1. **[47-2. Compose Multiplatform 네트워킹 고급](./47-2-compose-multiplatform-networking-advanced.md)** 으로 바로 이동
+2. 인증 및 캐싱 구현
+3. WebSocket으로 실시간 통신
+4. **[47-3. Compose Multiplatform 네트워킹 플랫폼](./47-3-compose-multiplatform-networking-platform.md)** 으로 플랫폼별 최적화
+
+---
+
+## 🎯 지금 바로 시작하세요!
+
+**[👉 47-1. Compose Multiplatform 네트워킹 기초로 이동](./47-1-compose-multiplatform-networking-basics.md)**
+
+---
+
+**마지막 업데이트**: 2024-12-03  
+**작성자**: Antigravity AI Assistant
+
+Happy Coding! 🚀
+
 
 ---
 
