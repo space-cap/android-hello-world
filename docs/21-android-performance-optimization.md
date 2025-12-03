@@ -1,18 +1,22 @@
-# Android 성능 최적화 완벽 가이드
+# Android 성능 최적화 가이드
 
-## 📚 목차
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> 1. **[21-1. Compose 성능 최적화](./21-1-compose-performance-optimization.md)** - Recomposition, LazyList
+> 2. **[21-2. 메모리 및 배터리 최적화](./21-2-memory-battery-optimization.md)** - 메모리 누수, 배터리
+> 3. **[21-3. 성능 프로파일링 실전](./21-3-performance-profiling.md)** - Android Profiler, Baseline Profiles
 
-1. [성능 최적화 개요](#성능-최적화-개요)
-2. [Recomposition 최적화](#recomposition-최적화)
-3. [메모리 관리](#메모리-관리)
-4. [배터리 효율성](#배터리-효율성)
-5. [APK 크기 최적화](#apk-크기-최적화)
-6. [네트워크 최적화](#네트워크-최적화)
-7. [데이터베이스 최적화](#데이터베이스-최적화)
-8. [이미지 최적화](#이미지-최적화)
-9. [렌더링 성능](#렌더링-성능)
-10. [프로파일링 도구](#프로파일링-도구)
-11. [실전 체크리스트](#실전-체크리스트)
+---
+
+## 🚀 빠른 시작
+
+**[👉 21-1. Compose 성능 최적화로 이동](./21-1-compose-performance-optimization.md)**
+
+---
+
+**마지막 업데이트**: 2024-12-03
+
 
 ---
 

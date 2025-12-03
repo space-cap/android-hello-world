@@ -1,13 +1,49 @@
 # Jetpack Compose 테스팅 가이드
 
-## 📚 목차
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> 테스팅을 더 체계적으로 학습할 수 있도록 3개의 상세한 문서로 분할되었습니다:
+> 
+> 1. **[15-1. Jetpack Compose 테스팅 기초](./15-1-jetpack-compose-testing-basics.md)** - 기본 UI 테스트
+> 2. **[15-2. Jetpack Compose 테스팅 고급](./15-2-jetpack-compose-testing-advanced.md)** - ViewModel, Repository 테스팅
+> 3. **[15-3. Jetpack Compose 테스팅 실전 시나리오](./15-3-jetpack-compose-testing-scenarios.md)** - TDD, 실전 예제
 
-1. [테스팅 개요](#테스팅-개요)
-2. [프로젝트 설정](#프로젝트-설정)
-3. [UI 테스트](#ui-테스트)
-4. [ViewModel 테스트](#viewmodel-테스트)
-5. [Repository 테스트](#repository-테스트)
-6. [실전 예제](#실전-예제)
+---
+
+## 📚 새로운 시리즈 구성
+
+### 15-1. Jetpack Compose 테스팅 기초 (⭐ 시작점)
+- 테스팅 개요 (왜 필요한가, 테스트 피라미드)
+- 프로젝트 설정
+- 기본 UI 테스트
+- 간단한 예제
+
+### 15-2. Jetpack Compose 테스팅 고급
+- ViewModel 테스팅
+- Repository 테스팅
+- Navigation 테스팅
+- 고급 Compose 테스팅
+
+### 15-3. Jetpack Compose 테스팅 실전 시나리오
+- TDD (Test-Driven Development)
+- 실전 시나리오 5가지
+- 테스트 커버리지
+- CI/CD 통합
+
+---
+
+## 🚀 빠른 시작
+
+**[👉 15-1. Jetpack Compose 테스팅 기초로 이동](./15-1-jetpack-compose-testing-basics.md)**
+
+---
+
+**마지막 업데이트**: 2024-12-03  
+**작성자**: Antigravity AI Assistant
+
+Happy Testing! 🧪
+
 
 ---
 
