@@ -1,6 +1,6 @@
 # Android Jetpack Compose 학습 로드맵
 
-## 📚 작성 완료된 문서 (총 89개)
+## 📚 작성 완료된 문서 (총 100개 이상)
 
 ### 🚀 시작하기 & 기본 (1-6번)
 - ✅ [00. 학습 로드맵](./00-learning-roadmap.md)
@@ -24,17 +24,25 @@
 ### 💾 데이터 & 시스템 (13-20번)
 - ✅ [13. Room 데이터베이스](./13-android-room-database.md)
 - ✅ [14. 권한 관리](./14-android-permissions-guide.md)
-- ✅ [15. 테스팅](./15-jetpack-compose-testing.md)
+- ✅ [15-1. 테스팅 기초](./15-1-jetpack-compose-testing-basics.md)
+- ✅ [15-2. 테스팅 고급](./15-2-jetpack-compose-testing-advanced.md)
+- ✅ [15-3. 테스팅 시나리오](./15-3-jetpack-compose-testing-scenarios.md)
 - ✅ [16. 디버깅](./16-android-debugging-guide.md)
 - ✅ [17. 앱 배포](./17-android-app-deployment.md)
 - ✅ [18-1. Android Architecture의 역사](./18-1-android-architecture-history.md)
 - ✅ [18-2. 아키텍처 가이드](./18-2-android-architecture-guide.md)
-- ✅ [19. 고급 Compose 기법](./19-advanced-compose-techniques.md)
+- ✅ [19-1. Custom Layout](./19-1-custom-layout-guide.md)
+- ✅ [19-2. Canvas & Graphics](./19-2-canvas-graphics-guide.md)
+- ✅ [19-3. Modifier 고급](./19-3-modifier-advanced.md)
 - ✅ [20. 완성된 앱 예제](./20-complete-app-example.md)
 
 ### ⚡ 성능 & 보안 (21-26번)
-- ✅ [21. 성능 최적화](./21-android-performance-optimization.md)
-- ✅ [22. 보안 가이드](./22-android-security-guide.md)
+- ✅ [21-1. Compose 성능 최적화](./21-1-compose-performance-optimization.md)
+- ✅ [21-2. 메모리 & 배터리 최적화](./21-2-memory-battery-optimization.md)
+- ✅ [21-3. 성능 프로파일링](./21-3-performance-profiling.md)
+- ✅ [22-1. 보안 기초](./22-1-android-security-basics.md)
+- ✅ [22-2. 보안 고급](./22-2-android-security-advanced.md)
+- ✅ [22-3. 보안 테스팅](./22-3-android-security-testing.md)
 - ✅ [23. Firebase 통합](./23-firebase-integration-guide.md)
 - ✅ [24. CI/CD 자동화](./24-ci-cd-automation-guide.md)
 - ✅ [25. 오프라인 퍼스트 아키텍처](./25-offline-first-architecture.md)
@@ -46,19 +54,27 @@
 - ✅ [29. 결제 & 빌링](./29-payment-billing-guide.md)
 - ✅ [30. 알림 & 포그라운드 서비스](./30-notifications-foreground-service.md)
 - ✅ [31. 다국어 지원](./31-localization-internationalization.md)
-- ✅ [32. WorkManager](./32-background-work-workmanager.md)
+- ✅ [32-1. WorkManager 기초](./32-1-workmanager-basics.md)
+- ✅ [32-2. WorkManager 고급](./32-2-workmanager-advanced.md)
+- ✅ [32-3. WorkManager 시나리오](./32-3-workmanager-scenarios.md)
 - ✅ [33. 딥링크 & 앱링크](./33-deep-links-app-links.md)
 - ✅ [34. 앱 위젯](./34-app-widgets-glance.md)
 - ✅ [35. Wear OS](./35-wear-os-guide.md)
 - ✅ [36. Material Design 3 고급](./36-material-design-3-advanced.md)
-- ✅ [37. DataStore](./37-jetpack-datastore-guide.md)
-- ✅ [38. Paging 3](./38-paging-3-guide.md)
+- ✅ [37-1. DataStore 기초](./37-1-datastore-basics.md)
+- ✅ [37-2. DataStore 고급](./37-2-datastore-advanced.md)
+- ✅ [38-1. Paging 기초](./38-1-paging-basics.md)
+- ✅ [38-2. Paging 고급](./38-2-paging-advanced.md)
+- ✅ [38-3. Paging Compose](./38-3-paging-compose.md)
 
 ### 🏗️ 아키텍처 & 패턴 (39-41번)
 - ✅ [39. Hilt 의존성 주입](./39-dependency-injection-hilt-guide.md)
 - ✅ [40-1. Kotlin Coroutines의 역사](./40-1-kotlin-coroutines-history.md)
 - ✅ [40-2. Coroutines & Flow](./40-2-kotlin-coroutines-flow-guide.md)
-- ✅ [41. MVVM & MVI 패턴](./41-mvvm-mvi-architecture-guide.md)
+- ✅ [40-3. Flow 기초](./40-3-flow-basics.md)
+- ✅ [40-4. Flow 고급](./40-4-flow-advanced.md)
+- ✅ [41-1. 아키텍처 패턴](./41-1-architecture-patterns.md)
+- ✅ [41-2. Clean Architecture](./41-2-clean-architecture.md)
 
 ### 🌍 Compose Multiplatform (42-48번)
 - ✅ [42. 기초](./42-compose-multiplatform-basics.md)
@@ -215,9 +231,9 @@ graph TD
 | 11 | 네트워킹과 API 연동 | ✅ 완료 | 4-5일 |
 | 12 | 이미지 로딩 | ✅ 완료 | 2-3일 |
 | 13 | Room 데이터베이스 | ✅ 완료 | 4-5일 |
-| 76 | WorkManager | ✅ 완료 | 2-3일 |
-| 77 | Paging 3 | ✅ 완료 | 2-3일 |
-| 78 | DataStore | ✅ 완료 | 1-2일 |
+| 32 | WorkManager | ✅ 완료 | 2-3일 |
+| 38 | Paging 3 | ✅ 완료 | 2-3일 |
+| 37 | DataStore | ✅ 완료 | 1-2일 |
 
 **완료 기준**:
 - ✅ 부드러운 애니메이션을 구현할 수 있다
@@ -239,13 +255,13 @@ graph TD
 | 14 | 권한 관리 | ✅ 완료 | 2-3일 |
 | 18-1 | Android Architecture의 역사 | ✅ 완료 | 0.5일 |
 | 18-2 | 아키텍처 가이드 | ✅ 완료 | 3-4일 |
-| 16 | MVVM/MVI 패턴 | ✅ 완료 | 4-5일 |
-| 17 | Hilt 의존성 주입 | ✅ 완료 | 4-5일 |
+| 41 | MVVM/MVI 패턴 | ✅ 완료 | 4-5일 |
+| 39 | Hilt 의존성 주입 | ✅ 완료 | 4-5일 |
 | 40-1 | Kotlin Coroutines의 역사 | ✅ 완료 | 0.5일 |
 | 40-2 | Coroutines & Flow | ✅ 완료 | 4-5일 |
-| 19 | 성능 최적화 | ✅ 완료 | 3-4일 |
-| 20 | 테스팅 | ✅ 완료 | 3-4일 |
-| 21 | 앱 배포 | ✅ 완료 | 2-3일 |
+| 21 | 성능 최적화 | ✅ 완료 | 3-4일 |
+| 15 | 테스팅 | ✅ 완료 | 3-4일 |
+| 17 | 앱 배포 | ✅ 완료 | 2-3일 |
 
 **완료 기준**:
 - ✅ 클린 아키텍처를 적용할 수 있다
@@ -345,16 +361,16 @@ graph TD
 
 ## 📊 문서 통계
 
-**전체 문서 수**: 89개  
-**총 용량**: 약 2.5MB  
-**총 라인 수**: 약 35,000줄  
-**코드 예제**: 1,500개 이상
+**전체 문서 수**: 100개 이상  
+**총 용량**: 약 3.0MB  
+**총 라인 수**: 약 45,000줄  
+**코드 예제**: 2,000개 이상
 
 ### 카테고리별 분포
 - 🚀 기초 & 핵심: 22개
 - ⚡ 성능 & 보안: 6개
 - 📱 Android 기능: 12개
-- 🏗️ 아키텍처: 4개
+- 🏗️ 아키텍처: 8개
 - 🌍 Multiplatform: 9개
 - 🆕 최신 Android: 5개
 - 🎨 Canvas: 3개
@@ -364,24 +380,16 @@ graph TD
 - ♿ 접근성 & 시스템: 6개
 - 🤖 머신러닝 & AR: 3개
 - 📱 폼 팩터: 3개
-- 🔄 백그라운드 & 데이터: 4개
+- 🔄 백그라운드 & 데이터: 6개
 
 ---
 
-**마지막 업데이트**: 2024-12-02  
+**마지막 업데이트**: 2024-12-04  
 **작성자**: Antigravity AI Assistant
 
 **문서 상태**:
-- ✅ 완료: 89개
+- ✅ 완료: 100+개
 - 📊 전체 진행률: 100% (전체 로드맵 완료)
 - 🎯 커버리지: 초급 → 고급 → 전문가 수준
-
-**최근 추가된 문서** (2024-12-02):
-- ✅ 03-1. Jetpack Compose의 역사
-- ✅ 18-1. Android Architecture의 역사
-- ✅ 40-1. Kotlin Coroutines의 역사
-- ✅ 72-1. AR의 역사
-- ✅ 73-1. 폴더블의 역사
-- ✅ 74-1. KMM의 역사
 
 Happy Learning! 🚀

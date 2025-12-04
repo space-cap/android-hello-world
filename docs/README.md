@@ -1,6 +1,6 @@
 # Android & Jetpack Compose 학습 문서
 
-이 저장소는 Android 개발, Jetpack Compose, 아키텍처, 최신 Android 버전 기능 등을 포괄하는 **총 89개**의 상세한 학습 문서를 포함하고 있습니다.
+이 저장소는 Android 개발, Jetpack Compose, 아키텍처, 최신 Android 버전 기능 등을 포괄하는 **총 100개 이상**의 상세한 학습 문서를 포함하고 있습니다.
 
 ## 📚 문서 목록
 
@@ -22,8 +22,12 @@
 - [10. 애니메이션](./10-jetpack-compose-animation-guide.md)
 - [11. Side Effects](./11-jetpack-compose-side-effects.md)
 - [12. 이미지 로딩](./12-jetpack-compose-image-loading.md)
-- [15. 테스팅](./15-jetpack-compose-testing.md)
-- [19. 고급 기법](./19-advanced-compose-techniques.md)
+- [15-1. 테스팅 기초](./15-1-jetpack-compose-testing-basics.md)
+- [15-2. 테스팅 고급](./15-2-jetpack-compose-testing-advanced.md)
+- [15-3. 테스팅 시나리오](./15-3-jetpack-compose-testing-scenarios.md)
+- [19-1. Custom Layout](./19-1-custom-layout-guide.md)
+- [19-2. Canvas & Graphics](./19-2-canvas-graphics-guide.md)
+- [19-3. Modifier 고급](./19-3-modifier-advanced.md)
 - [36. Material Design 3 고급](./36-material-design-3-advanced.md)
 
 #### Canvas & Custom Drawing
@@ -36,12 +40,18 @@
 - [18-1. Android Architecture의 역사](./18-1-android-architecture-history.md)
 - [18-2. 아키텍처 가이드](./18-2-android-architecture-guide.md)
 - [25. 오프라인 퍼스트 아키텍처](./25-offline-first-architecture.md)
-- [37. DataStore 가이드](./37-jetpack-datastore-guide.md)
-- [38. Paging 3 가이드](./38-paging-3-guide.md)
+- [37-1. DataStore 기초](./37-1-datastore-basics.md)
+- [37-2. DataStore 고급](./37-2-datastore-advanced.md)
+- [38-1. Paging 기초](./38-1-paging-basics.md)
+- [38-2. Paging 고급](./38-2-paging-advanced.md)
+- [38-3. Paging Compose](./38-3-paging-compose.md)
 - [39. Hilt 의존성 주입](./39-dependency-injection-hilt-guide.md)
 - [40-1. Kotlin Coroutines의 역사](./40-1-kotlin-coroutines-history.md)
 - [40-2. Coroutines & Flow](./40-2-kotlin-coroutines-flow-guide.md)
-- [41. MVVM & MVI 패턴](./41-mvvm-mvi-architecture-guide.md)
+- [40-3. Flow 기초](./40-3-flow-basics.md)
+- [40-4. Flow 고급](./40-4-flow-advanced.md)
+- [41-1. 아키텍처 패턴](./41-1-architecture-patterns.md)
+- [41-2. Clean Architecture](./41-2-clean-architecture.md)
 
 ### 🌐 네트워킹 & 클라우드
 - [09. Retrofit 네트워킹](./09-android-networking-retrofit.md)
@@ -54,7 +64,9 @@
 - [29. 결제 & 빌링](./29-payment-billing-guide.md)
 - [30. 알림 & 포그라운드 서비스](./30-notifications-foreground-service.md)
 - [31. 다국어 지원](./31-localization-internationalization.md)
-- [32. WorkManager (백그라운드 작업)](./32-background-work-workmanager.md)
+- [32-1. WorkManager 기초](./32-1-workmanager-basics.md)
+- [32-2. WorkManager 고급](./32-2-workmanager-advanced.md)
+- [32-3. WorkManager 시나리오](./32-3-workmanager-scenarios.md)
 - [33. 딥링크 & 앱링크](./33-deep-links-app-links.md)
 - [34. 앱 위젯](./34-app-widgets-glance.md)
 - [35. Wear OS](./35-wear-os-guide.md)
@@ -106,8 +118,12 @@
 ### ⚙️ DevOps & 성능
 - [16. 디버깅 가이드](./16-android-debugging-guide.md)
 - [17. 앱 배포](./17-android-app-deployment.md)
-- [21. 성능 최적화](./21-android-performance-optimization.md)
-- [22. 보안 가이드](./22-android-security-guide.md)
+- [21-1. Compose 성능 최적화](./21-1-compose-performance-optimization.md)
+- [21-2. 메모리 & 배터리 최적화](./21-2-memory-battery-optimization.md)
+- [21-3. 성능 프로파일링](./21-3-performance-profiling.md)
+- [22-1. 보안 기초](./22-1-android-security-basics.md)
+- [22-2. 보안 고급](./22-2-android-security-advanced.md)
+- [22-3. 보안 테스팅](./22-3-android-security-testing.md)
 - [24. CI/CD 자동화](./24-ci-cd-automation-guide.md)
 - [26. 모니터링 & 분석](./26-app-monitoring-analytics.md)
 
@@ -120,4 +136,4 @@
 - [20. 완성된 앱 예제](./20-complete-app-example.md)
 
 ---
-*Last Updated: 2024-12-02*
+*Last Updated: 2024-12-04*
