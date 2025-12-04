@@ -7,6 +7,8 @@
 - ✅ [01-1. Kotlin의 역사와 탄생 배경](./01-1-kotlin-history.md)
 - ✅ [01-2. Kotlin 기초 - Compose를 위한 필수 문법](./01-2-kotlin-basics-for-compose.md)
 - ✅ [02. Android 프로젝트 구조](./02-android-project-structure.md)
+- ✅ [90. 안드로이드 개발 종합 가이드](./90-android-development-comprehensive-guide.md)
+- ✅ [91. 앱 개발 실전 워크플로우 (피그마 to 앱)](./91-android-development-workflow-guide.md) 🆕
 - ✅ [03-1. Jetpack Compose의 역사](./03-1-jetpack-compose-history.md)
 - ✅ [03-2. Layout & UI 컴포넌트](./03-2-jetpack-compose-layout-guide.md)
 - ✅ [04. State 관리](./04-jetpack-compose-state-guide.md)
@@ -80,17 +82,17 @@
 - ✅ [42. 기초](./42-compose-multiplatform-basics.md)
 - ✅ [43. 아키텍처](./43-compose-multiplatform-architecture.md)
 - ✅ [44. UI 컴포넌트](./44-compose-multiplatform-ui-components.md)
-- ✅ [45. 네비게이션](./45-compose-multiplatform-navigation.md)
-- ✅ [46. 리소스 관리](./46-compose-multiplatform-resources.md)
-- ✅ [47. 네트워킹](./47-compose-multiplatform-networking.md)
-- ✅ [48. 고급 주제](./48-compose-multiplatform-advanced.md)
+- [45. 네비게이션](./45-compose-multiplatform-navigation.md)
+- [46. 리소스 관리](./46-compose-multiplatform-resources.md)
+- [47. 네트워킹](./47-compose-multiplatform-networking.md)
+- [48. 고급 주제](./48-compose-multiplatform-advanced.md)
 
 ### 🆕 Android 버전별 새 기능 (49-53번)
 - ✅ [49. Android 13 기능](./49-android-13-new-features.md)
 - ✅ [50. Android 14 기능](./50-android-14-new-features.md)
 - ✅ [51. Android 15 기능](./51-android-15-new-features.md)
 - ✅ [52. Android 13/14/15 요약](./52-android-13-14-15-summary.md)
-- ✅ [53. 버전별 문서 작성 보고서](./53-android-versions-documentation-report.md)
+- ✅ [53. 문서 작성 보고서](./53-android-versions-documentation-report.md)
 
 ### 🎨 Canvas & Custom Drawing (54-56번)
 - ✅ [54. Canvas 기본](./54-jetpack-compose-canvas-basics.md)
@@ -289,49 +291,6 @@ graph TD
 | **시스템** | 접근성, 생체인식 등 (65-70) | ✅ 완료 |
 | **AI & AR** | ML Kit (71), ARCore (72) | ✅ 완료 |
 | **폼 팩터** | 폴더블 & Window Manager (73) | ✅ 완료 |
-
----
-
-## 🎯 추천 학습 순서 (초보자용)
-
-### 1단계: 필수 기초 (1-2주)
-1. ✅ Kotlin의 역사와 탄생 배경 (01-1)
-2. ✅ Kotlin 기초 - 문법 (01-2)
-3. ✅ Android 프로젝트 구조 (02)
-4. ✅ Jetpack Compose의 역사 (03-1)
-5. ✅ Layout & UI (03-2)
-6. ✅ State 관리 (04)
-
-### 2단계: 핵심 기능 (2-3주)
-7. ✅ Navigation (05)
-8. ✅ 테마 & 스타일링 (06)
-9. ✅ 리스트 & 그리드 (07)
-10. ✅ 폼 & 유효성 검사 (08)
-
-### 3단계: 실전 준비 (3-4주)
-11. ✅ 네트워킹 (09)
-12. ✅ 애니메이션 (10)
-13. ✅ Side Effects (11)
-14. ✅ 이미지 로딩 (12)
-15. ✅ Room 데이터베이스 (13)
-
-### 4단계: 전문성 향상 (4주+)
-16. ✅ 권한 관리 (14)
-17. ✅ Android Architecture의 역사 (18-1)
-18. ✅ 아키텍처 (18-2, 41)
-19. ✅ 의존성 주입 (39)
-20. ✅ Kotlin Coroutines의 역사 (40-1)
-21. ✅ Coroutines & Flow (40-2)
-22. ✅ 성능 최적화 (21)
-
-### 5단계: 특화 주제 (필요 시)
-- **크로스 플랫폼**: Compose Multiplatform (42-48), KMM (74)
-- **최신 기능**: Android 13/14/15 (49-53)
-- **커스텀 UI**: Canvas (54-56)
-- **웹 통합**: WebView (57-59)
-- **하드웨어**: Bluetooth & NFC (60-62)
-- **시스템 기능**: 카메라, 지도, 결제 등 (27-38)
-- **신기술**: ARCore (72), ML Kit (71), 폴더블 (73)
 
 ---
 
