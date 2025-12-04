@@ -1,13 +1,22 @@
 # Advanced Jetpack Compose 기법
 
-## 📚 목차
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> 1. **[19-1. Custom Layout 완벽 가이드](./19-1-custom-layout-guide.md)** - Layout Composable, SubcomposeLayout
+> 2. **[19-2. Canvas와 그래픽 완벽 가이드](./19-2-canvas-graphics-guide.md)** - Canvas, Path, 그라데이션
+> 3. **[19-3. Modifier 고급 기법](./19-3-modifier-advanced.md)** - 커스텀 Modifier, 제스처
 
-1. [Custom Layout](#custom-layout)
-2. [Canvas와 그래픽](#canvas와-그래픽)
-3. [Modifier 심화](#modifier-심화)
-4. [CompositionLocal](#compositionlocal)
-5. [성능 최적화](#성능-최적화)
-6. [실전 예제](#실전-예제)
+---
+
+## 🚀 빠른 시작
+
+**[👉 19-1. Custom Layout 완벽 가이드로 이동](./19-1-custom-layout-guide.md)**
+
+---
+
+**마지막 업데이트**: 2024-12-03
+
 
 ---
 

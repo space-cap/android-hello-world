@@ -1,14 +1,22 @@
-# Paging 3 완벽 가이드
+# Paging 3 가이드
 
-## 📚 목차
+> [!NOTE]
+> **이 문서는 새로운 종합 가이드 시리즈로 대체되었습니다!**
+> 
+> 1. **[38-1. Paging 3 기초](./38-1-paging-basics.md)** - PagingSource, Pager 생성
+> 2. **[38-2. Paging 3 고급](./38-2-paging-advanced.md)** - RemoteMediator, 검색/필터링
+> 3. **[38-3. Paging 3 Compose 통합](./38-3-paging-compose.md)** - LazyColumn, Pull to Refresh
 
-1. [Paging 3란?](#paging-3란)
-2. [기본 설정](#기본-설정)
-3. [PagingSource](#pagingsource)
-4. [RemoteMediator](#remotemediator)
-5. [Compose 통합](#compose-통합)
-6. [고급 기능](#고급-기능)
-7. [실전 예제](#실전-예제)
+---
+
+## 🚀 빠른 시작
+
+**[👉 38-1. Paging 3 기초로 이동](./38-1-paging-basics.md)**
+
+---
+
+**마지막 업데이트**: 2024-12-03
+
 
 ---
 
