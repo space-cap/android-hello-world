@@ -172,6 +172,12 @@ fun HowChainingWorks() {
 
 ### 시각적 이해
 
+**Modifier가 레이어처럼 쌓이는 방식:**
+
+![Modifier 체이닝 레이어](./images/modifier_chaining_layers.png)
+
+위 이미지는 Modifier가 어떻게 순서대로 레이어처럼 적용되는지 보여줍니다.
+
 ```kotlin
 /**
  * 레이어별 설명
@@ -261,6 +267,12 @@ fun OrderMatters() {
     }
 }
 ```
+
+**순서에 따른 시각적 차이:**
+
+![Modifier 순서 비교](./images/modifier_order_comparison.png)
+
+왼쪽은 padding → background, 오른쪽은 background → padding의 결과를 보여줍니다. 순서만 바뀌었는데 완전히 다른 결과가 나옵니다!
 
 ### 순서 패턴 비교
 
