@@ -70,6 +70,10 @@ fun BasicButtonsExample() {
 }
 ```
 
+**실제 UI 예시:**
+
+![Material Design 3 버튼 타입](file:///C:/Users/rich/.gemini/antigravity/brain/65855ba5-ae44-401a-a516-344752480bf3/material3_button_types_1764909534323.png)
+
 ### Button의 기본 구조
 
 ```kotlin
@@ -387,46 +391,6 @@ fun LoadingButton(
         leadingIcon = if (isLoading) {
             {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(16.dp),
-                    strokeWidth = 2.dp,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        } else null
-    )
-}
-
-// 사용 예
-@Composable
-fun LoadingButtonExample() {
-    var isLoading by remember { mutableStateOf(false) }
-    
-    LoadingButton(
-        text = "업로드",
-        onClick = {
-            isLoading = true
-            // 비동기 작업 수행
-        },
-        isLoading = isLoading
-    )
-}
-```
-
-### 2. 확인 다이얼로그가 있는 Button
-
-```kotlin
-@Composable
-fun ConfirmButton(
-    text: String,
-    confirmMessage: String,
-    onConfirm: () -> Unit,
-    modifier: Modifier = Modifier,
-    variant: ButtonVariant = ButtonVariant.DANGER
-) {
-    var showDialog by remember { mutableStateOf(false) }
-    
-    AppButton(
-        text = text,
         onClick = { showDialog = true },
         modifier = modifier,
         variant = variant
