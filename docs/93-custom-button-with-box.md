@@ -101,7 +101,7 @@ fun SimpleBoxButton(
 
 **커스텀 Box 버튼 예시:**
 
-![커스텀 Box 버튼 예제](file:///C:/Users/rich/.gemini/antigravity/brain/65855ba5-ae44-401a-a516-344752480bf3/custom_box_button_example_1764909549487.png)
+![커스텀 Box 버튼 예제](./images/custom_box_button_example.png)
 
 위 이미지는 Box를 사용하여 만들 수 있는 다양한 커스텀 버튼 디자인을 보여줍니다 (그라데이션, 뱃지 포함, 애니메이션 효과 등).
 

@@ -72,7 +72,7 @@ fun BasicButtonsExample() {
 
 **실제 UI 예시:**
 
-![Material Design 3 버튼 타입](file:///C:/Users/rich/.gemini/antigravity/brain/65855ba5-ae44-401a-a516-344752480bf3/material3_button_types_1764909534323.png)
+![Material Design 3 버튼 타입](./images/material3_button_types.png)
 
 ### Button의 기본 구조
 
