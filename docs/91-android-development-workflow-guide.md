@@ -15,6 +15,7 @@
 5.  **네비게이션 (Navigation)**: 화면 연결
 6.  **데이터 (Data)**: 모델링 및 더미 데이터 연결
 7.  **기능 연동 (Integration)**: ViewModel 및 로직 구현
+8.  **꿀팁 (Pro Tips)**: 초보자가 자주 묻는 실무 디테일 🆕
 
 ---
 
@@ -306,6 +307,44 @@ class RecipeRepository(
 *   **다크 모드**: 다크 테마 색상 점검.
 *   **접근성**: 이미지에 `contentDescription` 추가.
 *   **테스트**: 기기에서 직접 실행하며 버그 찾기.
+
+---
+
+## 8단계: 놓치기 쉬운 실무 디테일 (Pro Tips)
+
+개발하다 보면 반드시 마주치는 문제들입니다. 미리 알아두면 시간을 아낄 수 있습니다.
+
+### 8-1. 라이브러리 추가는 어디에? (Version Catalog)
+최신 안드로이드 프로젝트는 `build.gradle.kts`에 직접 버전을 적지 않고, `libs.versions.toml` 파일을 사용합니다.
+
+1.  **파일 위치**: `gradle/libs.versions.toml`
+2.  **작성 방법**:
+    ```toml
+    [versions]
+    coil = "2.5.0"
+
+    [libraries]
+    coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+    ```
+3.  **적용 방법**: `build.gradle.kts` (Module: app)
+    ```kotlin
+    dependencies {
+        implementation(libs.coil.compose)
+    }
+    ```
+
+### 8-2. 앱 이름과 아이콘 바꾸기
+*   **앱 이름**: `res/values/strings.xml` 파일의 `app_name`을 수정하세요.
+*   **앱 아이콘**:
+    1.  `res` 폴더 우클릭 -> **New** -> **Image Asset** 선택.
+    2.  준비한 로고 이미지를 선택하고 배경색을 조절합니다.
+    3.  Next -> Finish를 누르면 다양한 해상도의 아이콘이 자동 생성됩니다.
+
+### 8-3. 앱이 죽었을 때 (Logcat)
+앱이 강제 종료되면 당황하지 말고 하단의 **Logcat** 탭을 엽니다.
+1.  검색창에 `FATAL`이라고 입력합니다.
+2.  빨간색 글씨 중 `Caused by:`로 시작하는 줄을 찾습니다.
+3.  그 줄에 적힌 에러 메시지가 정답입니다. (예: `NullPointerException`, `NetworkOnMainThreadException`)
 
 ---
 
