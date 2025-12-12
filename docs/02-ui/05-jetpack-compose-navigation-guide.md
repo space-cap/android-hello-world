@@ -3,6 +3,7 @@
 > 📖 **Navigation 가이드 시리즈**
 > - **05**: Navigation 기초 (현재 문서) - 기본 개념, 데이터 전달
 > - **05-1**: [Navigation 심화](./05-1-jetpack-compose-navigation-advanced.md) - Type Safe, 중첩 그래프, BottomNav, DeepLink
+> - **05-2**: [Navigation 3](./05-2-jetpack-compose-navigation-3.md) - 차세대 Navigation, 백스택 직접 제어, 적응형 레이아웃
 
 ## 📚 목차
 1. [개요](#개요)

@@ -11,6 +11,7 @@
 | 3 | [심플 디데이](./03-심플-디데이.md) | **Glance (Widget)**, **WorkManager** | ⭐⭐ | 초안 |
 | 4 | [심플 뽀모도로 타이머](./04-심플-뽀모도로-타이머.md) | **Foreground Service**, **Canvas** | ⭐⭐⭐ | 초안 |
 | 5 | [오늘 한 줄 감사](./05-오늘-한-줄-감사.md) | **View Capture (Share)**, **Emotional UI** | ⭐⭐ | 초안 |
+| 6 | [돋보기 (Smart Magnifier)](./06-돋보기.md) | **CameraX**, **Image Processing** | ⭐⭐ | 초안 |
 
 ## 🎯 기술 포인트 상세
 
@@ -33,3 +34,7 @@
 ### 5. 오늘 한 줄 감사
 - **View Capture**: Compose로 그려진 카드 UI를 비트맵 이미지로 변환하여 인스타그램 등에 공유하는 기능.
 - **Emotional UI**: 사용자 경험을 극대화하는 감성적인 디자인과 인터랙션 구현 연습.
+
+### 6. 돋보기 (Smart Magnifier)
+- **CameraX**: 안드로이드의 최신 카메라 라이브러리를 사용하여 줌, 손전등, 프리뷰 기능을 안정적으로 구현.
+- **Image Processing**: 화면을 정지(Freeze)시킬 때 비트맵을 캡처하고, `ColorMatrix`를 이용해 색상을 반전(고대비 모드)시키는 기술.
